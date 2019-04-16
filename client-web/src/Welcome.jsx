@@ -9,8 +9,10 @@ export function Welcome() {
         <div className="hero">
           <section className="hero-headers">
             <h1 className="hero-header">
-              <span>Todo List</span>
-              <span><span className="hero-header-plus">+</span> Day Planner</span>
+              <span>Todo List</span>{' '}
+              <span>
+                <span className="hero-header-plus">+</span> Day Planner
+              </span>
             </h1>
             <h2 className="hero-subheader">
               It's simple. It works. It will transform your results.
@@ -61,7 +63,9 @@ export function Welcome() {
                 </div>
               </div>
               <div className="hero-form-button">
-                <button className="call-to-action" type="submit">Sign up for FREE</button>
+                <button className="call-to-action" type="submit">
+                  Sign up for FREE
+                </button>
               </div>
             </form>
           </section>
