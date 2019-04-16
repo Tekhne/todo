@@ -1,0 +1,73 @@
+button {
+  background-color: $color-grey-lighter;
+  border-radius: $border-radius;
+  border: 1px solid transparent;
+  box-shadow: $box-shadow-sm;
+  color: $color-black;
+  cursor: pointer;
+  display: inline-block;
+  outline: none;
+  padding: 10px 12px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  vertical-align: middle;
+
+  &:active {
+    background-color: $color-grey-light;
+    box-shadow: $box-shadow-sm-inset;
+    transform: translate(1px, 1px);
+  }
+
+  &:focus,
+  &:hover {
+    background-color: $color-grey-light;
+    text-decoration: none;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+  }
+
+  &.call-to-action {
+    background-color: $color-green-bg;
+    color: $color-green-fg;
+    font-weight: bold;
+
+    &:active {
+      background-color: $color-green-bg-dark;
+      box-shadow: $box-shadow-sm-inset;
+    }
+
+    &:focus,
+    &:hover {
+      background-color: $color-green-bg-dark;
+    }
+  }
+}
+
+input {
+  border-radius: $border-radius;
+  border: 2px solid $color-grey-lighter;
+  box-shadow: $box-shadow-input;
+  padding: 10px 12px;
+  transition: background-color 0.2s ease-out;
+  width: 100%;
+
+  &:focus {
+    background-color: rgba($color-blue, 0.08);
+  }
+}
+
+:-moz-placeholder {
+  color: $color-input-placeholder;
+}
+:-ms-input-placeholder {
+  color: $color-input-placeholder;
+}
+::-webkit-input-placeholder {
+  color: $color-input-placeholder;
+}
+::placeholder {
+  color: $color-input-placeholder;
+}

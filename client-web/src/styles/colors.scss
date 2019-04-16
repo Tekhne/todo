@@ -1,0 +1,31 @@
+// https://coolors.co/0d72c2-98b8cf-7d8185-191a1a-ffffff
+// https://coolors.co/c12e0d-c1a60d-3daf0c-191a1a-ffffff
+
+$color-black: #191a1a;
+$color-blue-alt: #98b8cf;
+$color-blue: #0d72c2;
+$color-green-dark: #32900a;
+$color-green-darker: #277008;
+$color-green-darkest: #1c5006;
+$color-green-light: #60bd38;
+$color-green-lighter: #83cc64;
+$color-green-lightest: #a6da90;
+$color-green: #3daf0c;
+$color-grey-light: #94979b;
+$color-grey-lighter: #c3c5c7;
+$color-grey: #7d8185;
+$color-red: #c12e0d;
+$color-white: #ffffff;
+$color-yellow: #c1a60d;
+
+$color-green-bg-dark: $color-green-light;
+$color-green-bg: $color-green-lighter;
+$color-green-fg: $color-green-darkest;
+
+$color-border: $color-grey-lighter;
+$color-input-placeholder: $color-grey-light;
+
+:root {
+  background-color: $color-white;
+  color: $color-black;
+}

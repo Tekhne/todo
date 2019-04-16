@@ -1,0 +1,67 @@
+.welcome {
+  display: grid;
+  height: 80vh;
+
+  .hero {
+    align-self: center;
+    justify-self: center;
+
+    @media (min-width: 56.875rem) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+    }
+  }
+
+  .hero-headers {
+    align-self: center;
+    padding-right: 2rem;
+
+    @media (min-width: 56.875) {
+      text-align: right;
+    }
+  }
+
+  .hero-header {
+    display: block;
+    margin: 0;
+
+    @media (max-width: 25.3125rem) {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+    }
+  }
+
+  .hero-header-plus {
+    color: $color-blue;
+  }
+
+  .hero-subheader {
+    color: $color-grey;
+    font-size: 1.1rem;
+    font-weight: normal;
+    margin-top: 0.6rem;
+  }
+
+  .hero-form {
+    margin-top: 1.7rem;
+
+    @media (min-width: 56.875rem) {
+      border-left: 1px solid $color-border;
+      padding-left: 2rem;
+    }
+  }
+
+  .hero-form-button,
+  .hero-form-field + .hero-form-field {
+    margin-top: 0.8rem;
+  }
+
+  .hero-form-field-input {
+    margin-top: 0.25rem;
+
+    input {
+      max-width: 26rem;
+    }
+  }
+}

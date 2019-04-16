@@ -2,8 +2,13 @@
 
 @import '~normalize.css/normalize.css';
 
+@import './styles/colors';
 @import './styles/layout';
 @import './styles/typography';
+
+@import './styles/decorations';
+
+@import './styles/elements';
 
 @import './App';
 @import './Content';
