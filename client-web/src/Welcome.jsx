@@ -28,7 +28,7 @@ export function Welcome() {
                   <input
                     id="username"
                     name="username"
-                    placeholder="smithuser"
+                    placeholder="smitherson"
                     type="text"
                     value=""
                   />
