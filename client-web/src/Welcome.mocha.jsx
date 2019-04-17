@@ -17,14 +17,4 @@ describe('Welcome', () => {
   it('renders successfully', () => {
     shallow(buildComponent());
   });
-
-  it('renders Viewport', function() {
-    const component = shallow(buildComponent()).find(Viewport);
-    expect(component.exists).toBeTruthy();
-  });
-
-  it('renders Content', function() {
-    const component = shallow(buildComponent()).find(Content);
-    expect(component.exists).toBeTruthy();
-  });
 });

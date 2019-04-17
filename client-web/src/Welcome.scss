@@ -42,26 +42,4 @@
     font-weight: normal;
     margin-top: 0.6rem;
   }
-
-  .hero-form {
-    margin-top: 1.7rem;
-
-    @media (min-width: 56.875rem) {
-      border-left: 1px solid $color-border;
-      padding-left: 2rem;
-    }
-  }
-
-  .hero-form-button,
-  .hero-form-field + .hero-form-field {
-    margin-top: 0.8rem;
-  }
-
-  .hero-form-field-input {
-    margin-top: 0.25rem;
-
-    input {
-      max-width: 26rem;
-    }
-  }
 }
