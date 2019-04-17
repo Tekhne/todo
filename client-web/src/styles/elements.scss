@@ -26,7 +26,8 @@ button {
   }
 
   &:disabled {
-    opacity: 0.7;
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 
   &.call-to-action {
@@ -56,6 +57,10 @@ input {
 
   &:focus {
     background-color: rgba($color-blue, 0.08);
+  }
+
+  &.field-has-error {
+    background-color: rgba($color-red, 0.08);
   }
 }
 

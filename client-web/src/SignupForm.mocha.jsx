@@ -14,4 +14,6 @@ describe('SignupForm', function() {
   it('renders successfully', function() {
     shallow(buildComponent());
   });
+
+  // FIXME
 });

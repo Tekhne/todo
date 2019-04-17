@@ -18,4 +18,10 @@
       max-width: 26rem;
     }
   }
+
+  .signup-form-field-error {
+    color: $color-red;
+    font-size: $font-size-field-error;
+    margin-top: 0.25rem;
+  }
 }
