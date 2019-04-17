@@ -6,8 +6,8 @@
     "eject": "react-scripts eject",
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "test:mocha": "cross-env NODE_ENV=test mocha --exit --require @babel/register --require src/mochaSetup.js \"src/**/*.mocha.jsx\"",
-    "test:mocha:coverage": "cross-env NODE_ENV=test nyc --require @babel/register mocha --exit --require src/mochaSetup.js \"src/**/*.mocha.jsx\""
+    "test:mocha": "cross-env NODE_ENV=test mocha --exit --require @babel/register --require src/mochaSetup.js \"src/**/*.mocha.{js,jsx}\"",
+    "test:mocha:coverage": "cross-env NODE_ENV=test nyc --require @babel/register mocha --exit --require src/mochaSetup.js \"src/**/*.mocha.{js,jsx}\""
   },
   "dependencies": {
     "@babel/core": "^7.4.3",
