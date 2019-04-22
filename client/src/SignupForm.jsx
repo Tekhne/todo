@@ -65,7 +65,7 @@ export function SignupForm() {
     if (errors) return setState({ ...state, errors, submittable: false });
 
     try {
-      await serverApi.post('signup', state);
+      await serverApi.post({ data: state, route: 'signup' });
       // FIXME handle result
     } catch (error) {
       // FIXME handle error
