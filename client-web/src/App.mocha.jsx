@@ -1,39 +1,31 @@
+import App from './App';
 import React from 'react';
-import Welcome from './Welcome';
-import expect from 'expect';
-import { App } from './App';
-import { Route, Switch } from 'react-router-dom';
-import { shallow } from 'enzyme';
+import ReactDOM from 'react-dom';
+import { MemoryRouter } from 'react-router';
+import { cleanup, render } from 'react-testing-library';
 
-function buildProps(props = {}) {
-  return { ...props };
-}
+describe('App', function() {
+  this.timeout(5000);
 
-function buildComponent(props = {}) {
-  return <App {...buildProps(props)} />;
-}
+  function buildWrapper() {
+    return ({ children }) => <MemoryRouter>{children}</MemoryRouter>;
+  }
 
-describe('App', function () {
+  function renderComponent() {
+    const wrapper = buildWrapper();
+    return render(<App />, { wrapper });
+  }
+
+  afterEach(cleanup);
+
   it('renders successfully', function() {
-    shallow(buildComponent());
-  });
-
-  it('renders Switch', function() {
-    const component = shallow(buildComponent());
-    expect(component.exists(Switch)).toBeTruthy();
-  });
-
-  it('renders Route for "/" path', function() {
-    const component = shallow(buildComponent());
-    const route = component.find(Route).findWhere(n => n.prop('path') === '/');
-    expect(route.props()).toMatchObject({ exact: true, component: Welcome });
-  });
-
-  it('renders Route for "/welcome" path', function() {
-    const component = shallow(buildComponent());
-    const route = component
-      .find(Route)
-      .findWhere(n => n.prop('path') === '/welcome');
-    expect(route.props()).toMatchObject({ component: Welcome });
+    const Wrapper = buildWrapper();
+    const div = document.createElement('div');
+    ReactDOM.render(
+      <Wrapper>
+        <App />
+      </Wrapper>,
+      div
+    );
   });
 });

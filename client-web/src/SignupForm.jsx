@@ -1,56 +1,50 @@
 import * as yup from 'yup';
-import React, { useState } from 'react';
-import api from './api';
+import React, { useContext, useState } from 'react';
+import ServicesContext from './ServicesContext';
 import { every, isNull, omit } from 'lodash';
 
-export function SignupForm({ localApi = api }) {
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .matches(/^\S+@\S+\.\S+$/, 'is invalid')
+    .max(254, 'must be less than 254 characters'),
+  password: yup.string().min(10, 'must be at least 10 characters'),
+  username: yup.string().required('is required')
+});
+
+async function validate({ name, schema, state }) {
+  if (name) {
+    try {
+      await schema.validateAt(name, state.values);
+      return null;
+    } catch (exception) {
+      return { ...state.errors, [exception.path]: exception.message };
+    }
+  }
+
+  try {
+    await schema.validate(state.values, { abortEarly: false });
+    return null;
+  } catch (exception) {
+    return exception.inner.reduce((es, e) => ({ ...es, [e.path]: e.message }), {
+      ...state.errors
+    });
+  }
+}
+
+export function SignupForm() {
+  const { serverApi } = useContext(ServicesContext);
+
   const [state, setState] = useState({
     errors: { email: null, password: null, username: null },
     submittable: true,
     values: { email: '', password: '', username: '' }
   });
 
-  const validationSchema = yup.object().shape({
-    email: yup
-      .string()
-      .matches(/^\S+@\S+\.\S+$/, 'is invalid')
-      .max(254, 'must be less than 254 characters'),
-    password: yup
-      .string()
-      .min(10, 'must be at least 10 characters')
-      .required('is required'),
-    username: yup.string().required('is required')
-  });
-
-  const validateAll = async () => {
-    try {
-      await validationSchema.validate(state.values, { abortEarly: false });
-      return null;
-    } catch (exception) {
-      return exception.inner.reduce(
-        (es, e) => ({ ...es, [e.path]: e.message }),
-        { ...state.errors }
-      );
-    }
-  };
-
-  const validateOne = async name => {
-    try {
-      await validationSchema.validateAt(name, state.values);
-      return null;
-    } catch (exception) {
-      return { ...state.errors, [exception.path]: exception.message };
-    }
-  };
-
   const handleBlur = async event => {
     const { name } = event.target;
-    const errors = await validateOne(name);
-
-    if (errors) {
-      setState({ ...state, errors, submittable: false });
-      return;
-    }
+    const errors = await validate({ name, schema, state });
+    if (errors) setState({ ...state, errors, submittable: false });
   };
 
   const handleChange = event => {
@@ -59,7 +53,7 @@ export function SignupForm({ localApi = api }) {
       ...state,
       errors: { ...state.errors, [name]: null },
       values: { ...state.values, [name]: value },
-      submittable: every(omit(state.errors, name), isNull) ? true : false
+      submittable: every(omit(state.errors, name), isNull)
     });
   };
 
@@ -67,21 +61,15 @@ export function SignupForm({ localApi = api }) {
     event.preventDefault();
     if (!state.submittable) return;
     setState({ ...state, submittable: false });
-    const errors = await validateAll();
-
-    if (errors) {
-      setState({ ...state, errors, submittable: false });
-      return;
-    }
+    const errors = await validate({ schema, state });
+    if (errors) return setState({ ...state, errors, submittable: false });
 
     try {
-      await localApi.send('post', 'signup', state);
+      await serverApi.post('signup', state);
       // FIXME handle result
     } catch (error) {
       // FIXME handle error
     }
-
-    setState({ ...state, submittable: true });
   };
 
   return (
@@ -152,7 +140,7 @@ export function SignupForm({ localApi = api }) {
             </div>
           )}
         </div>
-        <div className="signup-form-button">
+        <div className="signup-form-button-wrapper">
           <button
             className="call-to-action"
             disabled={!state.submittable}
