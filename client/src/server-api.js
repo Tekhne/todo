@@ -14,7 +14,7 @@ export class ServerApi {
     this.send({ method: 'post', ...args });
   }
 
-  async send({ ajax, data, method, route }) {
+  async send({ data, method, route }) {
     if (!has(routes, route)) throw new Error(`bad route: ${route}`);
     let response;
 
