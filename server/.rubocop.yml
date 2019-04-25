@@ -10,6 +10,8 @@ Encoding:
   Enabled: false
 Layout/CommentIndentation:
   Enabled: false
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
 Layout/IndentHeredoc:
   EnforcedStyle: squiggly
 Layout/MultilineMethodCallIndentation:
