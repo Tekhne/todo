@@ -29,5 +29,9 @@ module Todo
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Do this to allow PostgreSQL enum types. This generates a db/structure.sql
+    # file instead of db/schema.rb.
+    config.active_record.schema_format = :sql
   end
 end
