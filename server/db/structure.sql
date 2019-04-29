@@ -17,6 +17,15 @@ CREATE TYPE public.account_status AS ENUM (
 );
 
 
+--
+-- Name: username_credential_password_digest_type; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.username_credential_password_digest_type AS ENUM (
+    'bcrypt'
+);
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -74,10 +83,51 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: username_credentials; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.username_credentials (
+    id bigint NOT NULL,
+    account_id bigint NOT NULL,
+    password_digest character varying NOT NULL,
+    username character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    password_digest_type public.username_credential_password_digest_type DEFAULT 'bcrypt'::public.username_credential_password_digest_type NOT NULL
+);
+
+
+--
+-- Name: username_credentials_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.username_credentials_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: username_credentials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.username_credentials_id_seq OWNED BY public.username_credentials.id;
+
+
+--
 -- Name: accounts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.accounts ALTER COLUMN id SET DEFAULT nextval('public.accounts_id_seq'::regclass);
+
+
+--
+-- Name: username_credentials id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.username_credentials ALTER COLUMN id SET DEFAULT nextval('public.username_credentials_id_seq'::regclass);
 
 
 --
@@ -105,10 +155,40 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: username_credentials username_credentials_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.username_credentials
+    ADD CONSTRAINT username_credentials_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: index_accounts_on_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_accounts_on_status ON public.accounts USING btree (status);
+
+
+--
+-- Name: index_username_credentials_on_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_username_credentials_on_account_id ON public.username_credentials USING btree (account_id);
+
+
+--
+-- Name: index_username_credentials_on_username; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_username_credentials_on_username ON public.username_credentials USING btree (username);
+
+
+--
+-- Name: username_credentials fk_rails_3c4665b205; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.username_credentials
+    ADD CONSTRAINT fk_rails_3c4665b205 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
 
 
 --
@@ -118,6 +198,8 @@ CREATE INDEX index_accounts_on_status ON public.accounts USING btree (status);
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20190426205855');
+('20190426205855'),
+('20190428144541'),
+('20190429162136');
 
 
