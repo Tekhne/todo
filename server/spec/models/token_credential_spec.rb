@@ -4,7 +4,7 @@ RSpec.describe TokenCredential, type: :model do
   subject(:token_credential) { described_class.new }
 
   it 'defines an enum for type' do
-    expect(token_credential.defined_enums).to include('type')
+    expect(token_credential.defined_enums).to include('token_type')
   end
 
   context 'with a database' do
@@ -31,13 +31,13 @@ RSpec.describe TokenCredential, type: :model do
 
     it do
       expect(token_credential).to \
-        have_db_column(:type)
+        have_db_column(:token_type)
         .of_type(:enum)
         .with_options(null: false)
     end
 
     it { is_expected.to have_db_index(:token).unique }
-    it { is_expected.to have_db_index(:type) }
+    it { is_expected.to have_db_index(:token_type) }
   end
 
   context 'with assocations' do
@@ -45,7 +45,6 @@ RSpec.describe TokenCredential, type: :model do
   end
 
   context 'with validations' do
-    it { is_expected.to validate_presence_of(:token) }
     it { is_expected.to validate_presence_of(:expiration) }
   end
 
