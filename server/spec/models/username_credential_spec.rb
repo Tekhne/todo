@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe UsernameCredential, type: :model do
   subject(:username_credential) { described_class.new }
 
+  it 'defines enum for password_digest_type' do
+    expect(username_credential.defined_enums).to include('password_digest_type')
+  end
+
   describe 'validation' do
     it { is_expected.to belong_to(:account) }
     it { is_expected.to have_db_column(:account_id) }
