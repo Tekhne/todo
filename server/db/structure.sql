@@ -102,7 +102,7 @@ CREATE TABLE public.token_credentials (
     token character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    type public.token_credential_type NOT NULL
+    token_type public.token_credential_type NOT NULL
 );
 
 
@@ -242,10 +242,10 @@ CREATE UNIQUE INDEX index_token_credentials_on_token ON public.token_credentials
 
 
 --
--- Name: index_token_credentials_on_type; Type: INDEX; Schema: public; Owner: -
+-- Name: index_token_credentials_on_token_type; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_token_credentials_on_type ON public.token_credentials USING btree (type);
+CREATE INDEX index_token_credentials_on_token_type ON public.token_credentials USING btree (token_type);
 
 
 --
@@ -288,6 +288,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190426205855'),
 ('20190428144541'),
 ('20190429162136'),
-('20190429170737');
+('20190429170737'),
+('20190429184734');
 
 
