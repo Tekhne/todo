@@ -14,6 +14,10 @@ RSpec.describe Account, type: :model do
     it { is_expected.to have_db_index(:status) }
   end
 
+  context 'with associations' do
+    it { is_expected.to have_many(:token_credentials) }
+  end
+
   context 'with validations' do
     it { is_expected.to validate_presence_of(:status) }
   end
