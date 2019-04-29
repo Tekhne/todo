@@ -44,6 +44,8 @@ Metrics/PerceivedComplexity:
   Enabled: false
 NumericLiterals:
   Enabled: false
+RSpec/MessageChain:
+  Enabled: false
 RSpec/MultipleExpectations:
   Enabled: false
 RSpec/NestedGroups:
