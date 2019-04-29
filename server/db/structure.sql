@@ -18,6 +18,15 @@ CREATE TYPE public.account_status AS ENUM (
 
 
 --
+-- Name: token_credential_type; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.token_credential_type AS ENUM (
+    'email_confirmation'
+);
+
+
+--
 -- Name: username_credential_password_digest_type; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -83,6 +92,40 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: token_credentials; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.token_credentials (
+    id bigint NOT NULL,
+    account_id bigint NOT NULL,
+    expiration timestamp without time zone NOT NULL,
+    token character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    type public.token_credential_type NOT NULL
+);
+
+
+--
+-- Name: token_credentials_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.token_credentials_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: token_credentials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.token_credentials_id_seq OWNED BY public.token_credentials.id;
+
+
+--
 -- Name: username_credentials; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -124,6 +167,13 @@ ALTER TABLE ONLY public.accounts ALTER COLUMN id SET DEFAULT nextval('public.acc
 
 
 --
+-- Name: token_credentials id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.token_credentials ALTER COLUMN id SET DEFAULT nextval('public.token_credentials_id_seq'::regclass);
+
+
+--
 -- Name: username_credentials id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -155,6 +205,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: token_credentials token_credentials_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.token_credentials
+    ADD CONSTRAINT token_credentials_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: username_credentials username_credentials_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -167,6 +225,27 @@ ALTER TABLE ONLY public.username_credentials
 --
 
 CREATE INDEX index_accounts_on_status ON public.accounts USING btree (status);
+
+
+--
+-- Name: index_token_credentials_on_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_token_credentials_on_account_id ON public.token_credentials USING btree (account_id);
+
+
+--
+-- Name: index_token_credentials_on_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_token_credentials_on_token ON public.token_credentials USING btree (token);
+
+
+--
+-- Name: index_token_credentials_on_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_token_credentials_on_type ON public.token_credentials USING btree (type);
 
 
 --
@@ -192,6 +271,14 @@ ALTER TABLE ONLY public.username_credentials
 
 
 --
+-- Name: token_credentials fk_rails_4711eb112b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.token_credentials
+    ADD CONSTRAINT fk_rails_4711eb112b FOREIGN KEY (account_id) REFERENCES public.accounts(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -200,6 +287,7 @@ SET search_path TO "$user", public;
 INSERT INTO "schema_migrations" (version) VALUES
 ('20190426205855'),
 ('20190428144541'),
-('20190429162136');
+('20190429162136'),
+('20190429170737');
 
 
