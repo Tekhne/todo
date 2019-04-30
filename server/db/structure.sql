@@ -83,6 +83,39 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: email_addresses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.email_addresses (
+    id bigint NOT NULL,
+    account_id bigint NOT NULL,
+    email character varying(254) NOT NULL,
+    confirmed boolean DEFAULT false NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: email_addresses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.email_addresses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: email_addresses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.email_addresses_id_seq OWNED BY public.email_addresses.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -167,6 +200,13 @@ ALTER TABLE ONLY public.accounts ALTER COLUMN id SET DEFAULT nextval('public.acc
 
 
 --
+-- Name: email_addresses id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.email_addresses ALTER COLUMN id SET DEFAULT nextval('public.email_addresses_id_seq'::regclass);
+
+
+--
 -- Name: token_credentials id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -194,6 +234,14 @@ ALTER TABLE ONLY public.accounts
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: email_addresses email_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.email_addresses
+    ADD CONSTRAINT email_addresses_pkey PRIMARY KEY (id);
 
 
 --
@@ -225,6 +273,20 @@ ALTER TABLE ONLY public.username_credentials
 --
 
 CREATE INDEX index_accounts_on_status ON public.accounts USING btree (status);
+
+
+--
+-- Name: index_email_addresses_on_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_email_addresses_on_account_id ON public.email_addresses USING btree (account_id);
+
+
+--
+-- Name: index_email_addresses_on_email; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_email_addresses_on_email ON public.email_addresses USING btree (email);
 
 
 --
@@ -279,6 +341,14 @@ ALTER TABLE ONLY public.token_credentials
 
 
 --
+-- Name: email_addresses fk_rails_b5f765e7ff; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.email_addresses
+    ADD CONSTRAINT fk_rails_b5f765e7ff FOREIGN KEY (account_id) REFERENCES public.accounts(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -289,6 +359,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190428144541'),
 ('20190429162136'),
 ('20190429170737'),
-('20190429184734');
+('20190429184734'),
+('20190430193519');
 
 
