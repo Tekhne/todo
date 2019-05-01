@@ -16,6 +16,8 @@ RSpec.describe Account, type: :model do
 
   context 'with associations' do
     it { is_expected.to have_many(:token_credentials) }
+    it { is_expected.to have_one(:email_address) }
+    it { is_expected.to have_one(:username_credential) }
   end
 
   context 'with validations' do
