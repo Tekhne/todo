@@ -31,3 +31,6 @@
 
 en:
   hello: "Hello world"
+  signups_mailer:
+    signup:
+      subject: Email confirmation for App Name account.

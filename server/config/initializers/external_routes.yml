@@ -1,0 +1,19 @@
+default: &default
+  :external_routes:
+    :root_url: https://appname.com
+    :signup_confirmation_url_base: https://appname.com/signup-confirmation/
+
+development:
+  <<: *default
+  :external_routes:
+    :root_url: http://localhost:3000
+    :signup_confirmation_url_base: https://localhost:3000/signup-confirmation/
+
+test:
+  <<: *default
+  :external_routes:
+    :root_url: http://localhost:3000
+    :signup_confirmation_url_base: https://localhost:3000/signup-confirmation/
+
+production:
+  <<: *default

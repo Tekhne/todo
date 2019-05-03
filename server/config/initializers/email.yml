@@ -1,0 +1,25 @@
+default: &default
+  :action_mailer:
+    :default_url_options:
+      :host: 'appname.com'
+  :email_addresses:
+    :support: 'support@appname.com'
+
+development:
+  <<: *default
+  :action_mailer:
+    :default_url_options:
+      :host: 'localhost:3000'
+  :email_addresses:
+    :support: 'support@example.com'
+
+test:
+  <<: *default
+  :action_mailer:
+    :default_url_options:
+      :host: 'localhost:3000'
+  :email_addresses:
+    :support: 'support@example.com'
+
+production:
+  <<: *default
