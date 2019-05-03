@@ -3,7 +3,7 @@ class EmailAddress < ApplicationRecord
 
   belongs_to :account
 
-  validates :confirmed, presence: true
+  validates :confirmed, inclusion: { in: [true, false], message: :blank }
   validates :email, format: { with: /\A\S+@\S+\.\S+\z/ }
   validates :email, length: EMAIL_LENGTH
 end

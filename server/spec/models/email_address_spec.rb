@@ -44,6 +44,10 @@ RSpec.describe EmailAddress, type: :model do
       expect(email_address.errors[:email]).to be_present
     end
 
-    it { is_expected.to validate_presence_of(:confirmed) }
+    it 'validates confirmed is not null' do
+      email_address.confirmed = nil
+      email_address.validate
+      expect(email_address.errors[:confirmed]).to be_present
+    end
   end
 end
