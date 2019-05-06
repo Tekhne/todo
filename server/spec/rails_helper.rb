@@ -3,6 +3,7 @@ if ENV['TEST_COVERAGE']
 
   SimpleCov.start('rails') do
     add_filter %r{app/channels/} # TODO: remove once channel testing supported
+    add_filter %r{app/jobs/} # TODO: remove once jobs are implemented
   end
 end
 
