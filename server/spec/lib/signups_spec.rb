@@ -105,6 +105,30 @@ describe Signups do
           expect(message_delivery).to have_received(:deliver_later)
         end
 
+        context 'when delivering signup email fails' do
+          let(:exception) { StandardError.new('test error') }
+
+          before do
+            allow(message_delivery).to \
+              receive(:deliver_later).and_raise(exception)
+          end
+
+          it 'logs exception' do
+            begin
+              signups.signup(params)
+            rescue StandardError
+              # noop
+            end
+
+            expect(signups).to have_received(:log_exception)
+          end
+
+          it 'raises Signups::ServiceError' do
+            expect { signups.signup(params) }.to \
+              raise_error(Signups::ServiceError)
+          end
+        end
+
         it 'raises UnconfirmedEmail' do
           expect { signups.signup(params) }.to \
             raise_error(Signups::UnconfirmedEmail)
@@ -301,6 +325,30 @@ describe Signups do
       signups.signup(params)
       expect(SignupsMailer).to have_received(:signup).with(token_credential)
       expect(message_delivery).to have_received(:deliver_later)
+    end
+
+    context 'when delivering signup email fails' do
+      let(:exception) { StandardError.new('test error') }
+
+      before do
+        allow(message_delivery).to \
+          receive(:deliver_later).and_raise(exception)
+      end
+
+      it 'logs exception' do
+        begin
+          signups.signup(params)
+        rescue StandardError
+          # noop
+        end
+
+        expect(signups).to have_received(:log_exception)
+      end
+
+      it 'raises Signups::ServiceError' do
+        expect { signups.signup(params) }.to \
+          raise_error(Signups::ServiceError)
+      end
     end
   end
 end

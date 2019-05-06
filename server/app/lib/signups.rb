@@ -30,7 +30,13 @@ class Signups
       type: 'email_confirmation'
     )
 
-    SignupsMailer.signup(token_credential).deliver_later
+    begin
+      SignupsMailer.signup(token_credential).deliver_later
+    rescue StandardError => e
+      log_exception e
+      raise ServiceError.new
+    end
+
     raise UnconfirmedEmail
   rescue ActiveRecord::ActiveRecordError => e
     log_exception e
@@ -71,7 +77,12 @@ class Signups
       )
     end
 
-    SignupsMailer.signup(token_credential).deliver_later
+    begin
+      SignupsMailer.signup(token_credential).deliver_later
+    rescue StandardError => e
+      log_exception e
+      raise ServiceError.new
+    end
   rescue ActiveRecord::ActiveRecordError => e
     log_exception e
     raise ServiceError.new
