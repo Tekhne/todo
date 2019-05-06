@@ -89,7 +89,7 @@ describe Signups do
             expect(TokenCredential).to have_received(:create!).with(
               account: account,
               expiration: 1.day.from_now,
-              type: 'email_confirmation'
+              token_type: 'email_confirmation'
             )
           end
         end
@@ -293,7 +293,7 @@ describe Signups do
         expect(TokenCredential).to have_received(:create!).with(
           account: account,
           expiration: 1.day.from_now,
-          type: 'email_confirmation'
+          token_type: 'email_confirmation'
         )
       end
     end

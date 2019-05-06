@@ -27,7 +27,7 @@ class Signups
     token_credential = TokenCredential.create!(
       account: account,
       expiration: 1.day.from_now,
-      type: 'email_confirmation'
+      token_type: 'email_confirmation'
     )
 
     begin
@@ -73,7 +73,7 @@ class Signups
       token_credential = TokenCredential.create!(
         account: account,
         expiration: 1.day.from_now,
-        type: 'email_confirmation'
+        token_type: 'email_confirmation'
       )
     end
 
