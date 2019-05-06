@@ -1,4 +1,4 @@
-class SignupsController < ApplicationController
+class Api::SignupsController < ApplicationController
   def create
     Signups.new.signup(create_params)
     @message = I18n.t('signups_controller.create.success')

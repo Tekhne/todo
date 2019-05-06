@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SignupsController, type: :controller do
+RSpec.describe Api::SignupsController, type: :controller do
   describe 'POST #create' do
     let(:params) do
       {
@@ -23,7 +23,7 @@ RSpec.describe SignupsController, type: :controller do
       allow(signups).to receive(:signup)
     end
 
-    it { is_expected.to route(:post, '/signup').to(action: :create) }
+    it { is_expected.to route(:post, '/api/signup').to(action: :create) }
 
     it 'signs up user with given params' do
       post :create, as: :json, params: params
