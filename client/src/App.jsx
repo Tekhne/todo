@@ -5,12 +5,14 @@ import { ServicesContext, services } from './ServicesContext';
 
 export function App() {
   return (
-    <ServicesContext.Provider value={services}>
-      <Switch>
-        <Route exact path="/" component={Welcome} />
-        <Route path="/welcome" component={Welcome} />
-      </Switch>
-    </ServicesContext.Provider>
+    <div className="app">
+      <ServicesContext.Provider value={services}>
+        <Switch>
+          <Route exact path="/" component={Welcome} />
+          <Route path="/welcome" component={Welcome} />
+        </Switch>
+      </ServicesContext.Provider>
+    </div>
   );
 }
 
