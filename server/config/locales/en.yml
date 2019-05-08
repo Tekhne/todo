@@ -37,7 +37,7 @@ en:
   signups_controller:
     create:
       success: Sign up was successful.
-      unconfirmed_email: You already signed up, but we re-sent your confirmation email.
+      unconfirmed_email: You were already signed up, but we sent your confirmation email again.
   signups_mailer:
     signup:
       subject: Email confirmation for new App Name account.
