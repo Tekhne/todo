@@ -1,3 +1,4 @@
+import Login from './Login';
 import React from 'react';
 import Welcome from './Welcome';
 import { Route, Switch } from 'react-router-dom';
@@ -9,6 +10,7 @@ export function App() {
       <ServicesContext.Provider value={services}>
         <Switch>
           <Route exact path="/" component={Welcome} />
+          <Route path="/login" component={Login} />
           <Route path="/welcome" component={Welcome} />
         </Switch>
       </ServicesContext.Provider>
