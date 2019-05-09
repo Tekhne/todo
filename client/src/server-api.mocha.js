@@ -10,7 +10,7 @@ describe('ServerApi', function() {
     let serverApi;
 
     beforeEach(function() {
-      ajax = { post: fake.returns(Promise.resolve(response)) };
+      ajax = fake.returns(Promise.resolve(response));
       serverApi = new ServerApi({ ajax });
     });
 
@@ -18,7 +18,15 @@ describe('ServerApi', function() {
       const method = 'post';
       const route = 'signup';
       await serverApi.send({ data, method, route });
-      assert.calledWith(ajax[method], routes[route](), data);
+      assert.calledWith(ajax, {
+        data,
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        method,
+        url: routes[route]()
+      });
     });
 
     describe('when server request succeeds', function() {
@@ -28,33 +36,20 @@ describe('ServerApi', function() {
           method: 'post',
           route: 'signup'
         });
-        expect(result).toMatchObject({
-          httpStatus: response.status,
-          isError: false,
-          ...response.data
-        });
+        expect(result).toEqual(response);
       });
     });
 
     describe('when server request fails', function() {
       it('resolves with an error response object', async function() {
-        const error = {
-          response: {
-            data: { message: 'test error message' },
-            status: 500
-          }
+        const response = {
+          data: { message: 'test error message' },
+          status: 500
         };
-        ajax.post = fake.returns(Promise.reject(error));
-        const result = await serverApi.send({
-          data,
-          method: 'post',
-          route: 'signup'
-        });
-        expect(result).toMatchObject({
-          httpStatus: error.response.status,
-          isError: true,
-          ...error.response.data
-        });
+        serverApi = new ServerApi({ ajax: fake.resolves(response) });
+        await expect(
+          serverApi.send({ data, method: 'post', route: 'signup' })
+        ).rejects.toEqual(response);
       });
     });
 

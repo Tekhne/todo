@@ -10,27 +10,25 @@ export class ServerApi {
     this.ajax = ajax || axios;
   }
 
-  async post(args) {
-    this.send({ method: 'post', ...args });
+  post(args) {
+    return this.send({ method: 'post', ...args });
   }
 
   async send({ data, method, route }) {
     if (!has(routes, route)) throw new Error(`bad route: ${route}`);
-    let response;
 
-    try {
-      response = await this.ajax[method](routes[route](), data);
-    } catch (error) {
-      response = error.response;
-    }
+    const response = await this.ajax({
+      data,
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      method,
+      url: routes[route]()
+    });
 
-    response = response || {};
-
-    return {
-      httpStatus: response.status,
-      isError: response.status >= 400,
-      ...response.data
-    };
+    if (response.status >= 400) throw response;
+    return response;
   }
 }
 
