@@ -6,6 +6,14 @@
     padding-left: 2rem;
   }
 
+  .notice {
+    max-width: 26rem;
+  }
+
+  .notice + .signup-form-field {
+    margin-top: 1rem;
+  }
+
   .signup-form-button-wrapper,
   .signup-form-field + .signup-form-field {
     margin-top: 0.8rem;
