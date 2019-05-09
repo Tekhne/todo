@@ -1,0 +1,54 @@
+.modal-body-open {
+  // Currently unused.
+}
+
+.modal-content {
+  background: $color-white;
+  border-radius: $border-radius;
+  border: 2px solid $color-modal-content-border;
+  box-shadow: $box-shadow;
+  display: grid;
+  grid-area: modal;
+  grid-template-columns: 1fr;
+  outline: none;
+  overflow: auto;
+  padding: 2rem 1rem 1rem 1rem;
+}
+
+.modal-html-open {
+  // Currently unused.
+}
+
+.modal-overlay {
+  background-color: $color-modal-overlay-background;
+  bottom: 0;
+  display: grid;
+  grid-template-areas: '. . .' '. modal .' '. . .';
+  grid-template-columns: minmax(1rem, 1fr) 90% minmax(1rem, 1fr);
+  grid-template-rows: minmax(1rem, 1fr) auto minmax(1rem, 2fr);
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  @media (min-width: 25rem) {
+  grid-template-columns: minmax(1rem, 1fr) 23rem minmax(1rem, 1fr);
+  }
+}
+
+.modal-portal {
+  // Currently unused.
+}
+
+.modal-inner-content {
+  align-self: start;
+}
+
+.modal-dismiss-wrapper {
+  align-self: end;
+  border-top: 2px solid $color-modal-dismiss-wrapper-border;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}

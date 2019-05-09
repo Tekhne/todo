@@ -14,7 +14,7 @@ $color-green-bg-dark: lighten($color-green, 5%);
 $color-green-bg: lighten($color-green, 10%);
 $color-green-fg: darken($color-green, 20%);
 
-$color-grey-bg: lighten($color-grey, 20%);
+$color-grey-bg: lighten($color-grey, 30%);
 $color-grey-fg: darken($color-grey, 25%);
 
 $color-red-bg: lighten($color-red, 20%);
@@ -30,9 +30,9 @@ $color-box-shadow-input: rgba($color-black, 0.18);
 $color-box-shadow-sm: rgba($color-black, 0.3);
 $color-box-shadow: rgba($color-black, 0.25);
 
-$color-button-background-active: lighten($color-grey, 15%);
-$color-button-background-focus: lighten($color-grey, 15%);
-$color-button-background: lighten($color-grey, 20%);
+$color-button-background-active: lighten($color-grey, 35%);
+$color-button-background-focus: lighten($color-grey, 35%);
+$color-button-background: lighten($color-grey, 30%);
 $color-button-call-to-action-background-active: lighten($color-green, 15%);
 $color-button-call-to-action-background: lighten($color-green, 10%);
 
@@ -40,6 +40,10 @@ $color-input-background-focus: rgba($color-blue, 0.08);
 $color-input-border: lighten($color-grey, 40%);
 $color-input-field-has-error-background: rgba($color-red, 0.08);
 $color-input-placeholder: lighten($color-grey, 20%);
+
+$color-modal-content-border: lighten($color-grey, 30%);
+$color-modal-dismiss-wrapper-border: lighten($color-grey, 40%);
+$color-modal-overlay-background: rgba($color-white, 0.85);
 
 :root {
   background-color: $color-white;
