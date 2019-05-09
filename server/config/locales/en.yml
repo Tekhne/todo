@@ -32,11 +32,11 @@
 en:
   application_controller:
     common:
-      param_errors: The information provided was invalid.
+      param_errors: The information you provided was invalid.
       service_error: We couldn't complete the request due to errors.
   signups_controller:
     create:
-      success: Sign up was successful.
+      success: Your sign up was completed successfully.
       unconfirmed_email: You were already signed up, but we sent your confirmation email again.
   signups_mailer:
     signup:
