@@ -1,0 +1,47 @@
+@mixin notice($color-bg, $color-fg) {
+  background-color: $color-bg;
+  border-radius: $border-radius;
+  color: $color-fg;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+
+  .notice-content {
+    padding: 0.7rem;
+  }
+
+  .notice-dismiss {
+    align-content: center;
+    cursor: pointer;
+    display: grid;
+    font-size: 1.6rem;
+    font-weight: bold;
+    justify-content: center;
+    padding: 0 0.5rem;
+    transition: color 0.2s ease-out;
+
+    &:focus,
+    &:hover {
+      color: lighten($color-fg, 15%);
+    }
+  }
+}
+
+.notice-alert {
+  @include notice($color-red-bg, $color-red-fg);
+}
+
+.notice-info {
+  @include notice($color-grey-bg, $color-grey-fg);
+}
+
+.notice-success {
+  @include notice($color-green-bg, $color-green-fg);
+}
+
+.notice-warn {
+  @include notice($color-yellow-bg, $color-yellow-fg);
+}
+
+.notice + .notice {
+  margin-top: 0.5rem;
+}
