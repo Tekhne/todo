@@ -34,7 +34,9 @@ export function Modal({
       portalClassName={portalClassName}
       {...restProps}
     >
-      <div className="modal-inner-content">{children}</div>
+      <div className="modal-inner-content" data-testid="modal-inner-content">
+        {children}
+      </div>
       <div className="modal-dismiss-wrapper">
         <button onClick={handleDismiss} type="button">
           Dismiss
