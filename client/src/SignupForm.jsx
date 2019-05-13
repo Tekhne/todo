@@ -17,7 +17,9 @@ const defaultProps = {
 };
 
 function getErrorMessage(error) {
-  return get(error, 'response.data.message') || error.message;
+  return (
+    get(error, 'response.data.message') || error.message || 'An error occurred.'
+  );
 }
 
 function getFirstOfFieldErrors(error) {
