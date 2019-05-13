@@ -1,35 +1,36 @@
 import React from 'react';
-import expect from 'expect';
-import { Content } from './Content';
-import { shallow } from 'enzyme';
-
-function buildProps(props = {}) {
-  return { ...props };
-}
-
-function buildComponent(props = {}) {
-  return <Content {...buildProps(props)} />;
-}
+import ReactDOM from 'react-dom';
+import Content from './Content';
+import { cleanup, render } from 'react-testing-library';
 
 describe('Content', function() {
+  this.timeout(5000);
+
+  function renderComponent(props = {}) {
+    return render(<Content {...props} />);
+  }
+
+  afterEach(cleanup);
+
   it('renders successfully', function() {
-    shallow(buildComponent());
+    const div = document.createElement('div');
+    ReactDOM.render(<Content />, div);
   });
 
-  const children = 'test children';
+  const text = 'test children';
 
   describe('when children prop is given', function() {
-    it('renders children prop', function() {
-      const component = shallow(buildComponent({ children }));
-      expect(component.text()).toEqual(children);
+    it('renders given children prop', function() {
+      const c = renderComponent({ children: text });
+      expect(c.getByText(text)).toBeInTheDocument();
     });
   });
 
   describe('when className prop is given', function() {
-    it('renders given className', function() {
+    it('renders given className prop', function() {
       const className = 'test-class test-class-2';
-      const component = shallow(buildComponent({ className, children }));
-      expect(component.prop('className')).toEqual(`content ${className}`);
+      const c = renderComponent({ className, children: text });
+      expect(c.getByTestId('content').className).toMatch(className);
     });
   });
 });

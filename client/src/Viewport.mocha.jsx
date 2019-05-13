@@ -1,35 +1,36 @@
 import React from 'react';
-import expect from 'expect';
-import { Viewport } from './Viewport';
-import { shallow } from 'enzyme';
-
-function buildProps(props = {}) {
-  return { ...props };
-}
-
-function buildComponent(props = {}) {
-  return <Viewport {...buildProps(props)} />;
-}
+import ReactDOM from 'react-dom';
+import Viewport from './Viewport';
+import { cleanup, render } from 'react-testing-library';
 
 describe('Viewport', function() {
+  this.timeout(5000);
+
+  function renderComponent(props = {}) {
+    return render(<Viewport {...props} />);
+  }
+
+  afterEach(cleanup);
+
   it('renders successfully', function() {
-    shallow(buildComponent());
+    const div = document.createElement('div');
+    ReactDOM.render(<Viewport />, div);
   });
 
-  const children = 'test children';
+  const text = 'test children';
 
   describe('when children prop is given', function() {
-    it('renders children prop', function() {
-      const component = shallow(buildComponent({ children }));
-      expect(component.text()).toEqual(children);
+    it('renders given children prop', function() {
+      const c = renderComponent({ children: text });
+      expect(c.getByText(text)).toBeInTheDocument();
     });
   });
 
   describe('when className prop is given', function() {
-    it('renders given className', function() {
+    it('renders given className prop', function() {
       const className = 'test-class test-class-2';
-      const component = shallow(buildComponent({ className, children }));
-      expect(component.prop('className')).toEqual(`viewport ${className}`);
+      const c = renderComponent({ className, children: text });
+      expect(c.getByTestId('viewport').className).toMatch(className);
     });
   });
 });

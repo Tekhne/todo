@@ -14,7 +14,11 @@ const defaultProps = {
 
 export function Content({ className, children }) {
   const cn = compact(['content', className]).join(' ');
-  return <span className={cn}>{children}</span>;
+  return (
+    <span className={cn} data-testid="content">
+      {children}
+    </span>
+  );
 }
 
 Content.propTypes = propTypes;
