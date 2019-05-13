@@ -32,7 +32,7 @@ describe('Welcome', function() {
 
   afterEach(cleanup);
 
-  it.only('renders successfully', function() {
+  it('renders successfully', function() {
     const Wrapper = buildWrapper({ services });
     const div = document.createElement('div');
     ReactDOM.render(
