@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Account, type: :model do
   subject(:account) { described_class.new }
 
-  context 'with a database' do
+  context 'with a backing database' do
     it do
       expect(account).to \
         have_db_column(:status)

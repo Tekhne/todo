@@ -7,7 +7,7 @@ RSpec.describe TokenCredential, type: :model do
     expect(token_credential.defined_enums).to include('token_type')
   end
 
-  context 'with a database' do
+  context 'with a backing database' do
     it do
       expect(token_credential).to \
         have_db_column(:account_id)

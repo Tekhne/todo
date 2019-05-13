@@ -7,7 +7,7 @@ RSpec.describe UsernameCredential, type: :model do
     expect(username_credential.defined_enums).to include('password_digest_type')
   end
 
-  context 'with a database' do
+  context 'with a backing database' do
     it do
       expect(username_credential).to \
         have_db_column(:account_id)

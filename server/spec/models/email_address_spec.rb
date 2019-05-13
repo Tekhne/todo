@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe EmailAddress, type: :model do
   subject(:email_address) { described_class.new }
 
-  context 'with a database' do
+  context 'with a backing database' do
     it do
       expect(email_address).to \
         have_db_column(:account_id)
