@@ -23,7 +23,7 @@ describe('Notice', function() {
   describe('when children prop is not given', function() {
     it('renders null', function() {
       const c = renderComponent({ children: null });
-      expect(c.queryByTestId('notice')).toBeNull();
+      expect(c.queryByTestId('notice')).not.toBeInTheDocument();
     });
   });
 
@@ -31,7 +31,7 @@ describe('Notice', function() {
     it('renders null', function() {
       const c = renderComponent();
       click(c.getByTestId('notice-dismiss'));
-      expect(c.queryByTestId('notice')).toBeNull();
+      expect(c.queryByTestId('notice')).not.toBeInTheDocument();
     });
   });
 
@@ -43,7 +43,14 @@ describe('Notice', function() {
   describe('when component is not dismissable', function () {
     it('does not render dismiss element', function() {
       const c = renderComponent({ dismissable: false });
-      expect(c.queryByTestId('notice-dismiss')).toBeNull();
+      expect(c.queryByTestId('notice-dismiss')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('when component is dismissable', function () {
+    it('renders a dismiss element', function() {
+      const c = renderComponent({ dismissable: true });
+      expect(c.queryByTestId('notice-dismiss')).toBeInTheDocument();
     });
   });
 });
