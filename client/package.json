@@ -7,11 +7,12 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "test:mocha": "cross-env NODE_ENV=test mocha --exit --require @babel/register --require src/mochaSetup.js \"src/**/*.mocha.{js,jsx}\"",
-    "test:mocha:coverage": "cross-env NODE_ENV=test nyc --require @babel/register mocha --exit --require src/mochaSetup.js \"src/**/*.mocha.{js,jsx}\""
+    "test:mocha:coverage": "cross-env NODE_ENV=test nyc mocha --exit --require src/mochaSetup.js \"src/**/*.mocha.{js,jsx}\""
   },
   "dependencies": {
     "@babel/core": "^7.4.3",
     "@babel/register": "^7.4.0",
+    "@istanbuljs/nyc-config-babel": "^2.1.1",
     "axios": "^0.18.0",
     "babel-plugin-istanbul": "^5.1.1",
     "babel-preset-react-app": "^7.0.2",
@@ -25,7 +26,7 @@
     "mocha": "^6.1.3",
     "node-sass": "^4.12.0",
     "normalize.css": "^8.0.1",
-    "nyc": "^13.3.0",
+    "nyc": "^14.1.1",
     "prettier": "^1.17.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -64,6 +65,12 @@
     "exclude": [
       "src/**/*.mocha.{js,jsx}",
       "src/mochaSetup.js"
-    ]
+    ],
+    "extends": "@istanbuljs/nyc-config-babel",
+    "extension": [
+      ".js",
+      ".jsx"
+    ],
+    "include": "src/**/*"
   }
 }
