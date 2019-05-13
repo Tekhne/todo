@@ -19,7 +19,7 @@
     "expect": "^24.8.0",
     "http-proxy-middleware": "^0.19.1",
     "jest-dom": "^3.2.2",
-    "jsdom": "^14.0.0",
+    "jsdom": "^15.1.0",
     "jsdom-global": "^3.0.2",
     "lodash": "^4.17.11",
     "mocha": "^6.1.3",
