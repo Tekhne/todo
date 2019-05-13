@@ -16,7 +16,7 @@ export function Welcome() {
               </span>
             </h1>
             <h2 className="hero-subheader">
-              It's simple. It works. It will transform your results.
+              It's simple. It works. Boost your productivity.
             </h2>
           </section>
           <SignupForm />
