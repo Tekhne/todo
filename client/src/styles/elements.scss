@@ -6,6 +6,7 @@ button {
   color: $color-black;
   cursor: pointer;
   display: inline-block;
+  font-size: 1rem;
   outline: none;
   padding: 10px 12px;
   text-align: center;
@@ -51,6 +52,7 @@ input {
   border-radius: $border-radius;
   border: 2px solid $color-input-border;
   box-shadow: $box-shadow-input;
+  font-size: 1rem;
   padding: 10px 12px;
   transition: background-color 0.2s ease-out;
   width: 100%;
