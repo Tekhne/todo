@@ -9,16 +9,16 @@ gem 'awesome_print',            '~> 1.8.0', group: %i[development test]
 gem 'bcrypt',                   '~> 3.1.12'
 gem 'better_errors',            '~> 2.5.1', group: %i[development]
 gem 'binding_of_caller',        '= 0.8.0', group: %i[development], platforms: %i[mri]
-gem 'bootsnap',                 '~> 1.4.3', require: false
-gem 'brakeman',                 '~> 4.5.0', group: %i[development]
-gem 'bullet',                   '~> 5.9.0', group: %i[development]
+gem 'bootsnap',                 '~> 1.4.4', require: false
+gem 'brakeman',                 '~> 4.5.1', group: %i[development]
+gem 'bullet',                   '~> 6.0.0', group: %i[development]
 gem 'bundler-audit',            '= 0.6.1', group: %i[development]
 gem 'byebug',                   '~> 11.0.1', group: %i[development test], platforms: %i[mri]
-gem 'capybara',                 '~> 3.18.0', group: %i[test]
+gem 'capybara',                 '~> 3.19.0', group: %i[test]
 gem 'dotenv-rails',             '~> 2.7.2', group: %i[development test]
 gem 'factory_bot_rails',        '~> 5.0.2', group: %i[development test]
 gem 'faker',                    '~> 1.9.3', group: %i[test]
-gem 'jbuilder',                 '~> 2.8.0'
+gem 'jbuilder',                 '~> 2.9.0'
 gem 'launchy',                  '~> 2.4.3', group: %i[test]
 gem 'listen',                   '~> 3.1.5', group: %i[development]
 gem 'pg',                       '~> 1.1.4'
@@ -27,8 +27,8 @@ gem 'pry-rails',                '= 0.3.9', group: %i[development test]
 gem 'puma',                     '~> 3.12.1'
 gem 'rails-controller-testing', '~> 1.0.4', group: %i[test]
 gem 'rspec-rails',              '~> 3.8.2', group: %i[development test]
-gem 'rubocop',                  '= 0.67.2', group: %i[development], require: false
-gem 'rubocop-rspec',            '~> 1.32.0', group: %i[development], require: false
+gem 'rubocop',                  '= 0.69.0', group: %i[development], require: false
+gem 'rubocop-rspec',            '~> 1.33.0', group: %i[development], require: false
 gem 'shoulda-matchers',         '~> 4.0.1', group: %i[test]
 gem 'simplecov',                '= 0.16.1', group: %i[test], require: false
 gem 'spring',                   '~> 2.0.2', group: %i[development]
