@@ -17,12 +17,14 @@ const defaultProps = {
 };
 
 function getErrorMessage(error) {
+  /* istanbul ignore next */
   return (
     get(error, 'response.data.message') || error.message || 'An error occurred.'
   );
 }
 
 function getFirstOfFieldErrors(error) {
+  /* istanbul ignore next */
   const errors = get(error, 'response.data.fieldErrors') || {};
   return mapValues(errors, v => v[0]);
 }

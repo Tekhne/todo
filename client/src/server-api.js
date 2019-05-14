@@ -10,6 +10,7 @@ export class ServerApi {
     this.ajax = ajax || axios;
   }
 
+  /* istanbul ignore next */
   post(args) {
     return this.send({ method: 'post', ...args });
   }
