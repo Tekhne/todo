@@ -34,7 +34,7 @@
     "react-helmet": "^5.2.0",
     "react-modal": "^3.8.1",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
+    "react-scripts": "3.0.0",
     "react-test-renderer": "^16.8.6",
     "react-testing-library": "^7.0.0",
     "sinon": "^7.3.1",
