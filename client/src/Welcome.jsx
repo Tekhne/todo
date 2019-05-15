@@ -1,12 +1,12 @@
 import Content from './Content';
-import React, { Fragment } from 'react';
+import React from 'react';
 import SignupForm from './SignupForm';
 import Viewport from './Viewport';
 import { Helmet } from 'react-helmet';
 
 export function Welcome() {
   return (
-    <Fragment>
+    <>
       <Helmet>
         <title>Welcome - App Name</title>
       </Helmet>
@@ -28,7 +28,7 @@ export function Welcome() {
           </div>
         </Content>
       </Viewport>
-    </Fragment>
+    </>
   );
 }
 

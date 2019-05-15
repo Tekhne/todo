@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import Modal from './Modal';
 import Notice from './Notice';
 import PropTypes from 'prop-types';
-import React, { Fragment, useContext, useReducer, useState } from 'react';
+import React, { useContext, useReducer, useState } from 'react';
 import ServicesContext from './ServicesContext';
 import { every, get, isNull, mapValues, omit, set } from 'lodash';
 import { withRouter } from 'react-router';
@@ -186,7 +186,7 @@ export function SignupForm({ history, modalAriaHideApp }) {
   const handleModalDismiss = () => history.push('/login');
 
   return (
-    <Fragment>
+    <>
       <section className="signup-form">
         <form onSubmit={handleSubmit}>
           {formState.error && (
@@ -287,7 +287,7 @@ export function SignupForm({ history, modalAriaHideApp }) {
       >
         {modalState.modalContent}
       </Modal>
-    </Fragment>
+    </>
   );
 }
 
