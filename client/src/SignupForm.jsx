@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import Modal from './Modal';
 import Notice from './Notice';
 import PropTypes from 'prop-types';
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useReducer, useState } from 'react';
 import ServicesContext from './ServicesContext';
 import { every, get, isNull, mapValues, omit, set } from 'lodash';
 import { withRouter } from 'react-router';
@@ -18,9 +18,7 @@ const defaultProps = {
 
 function getErrorMessage(error) {
   /* istanbul ignore next */
-  return (
-    get(error, 'response.data.message') || error.message || 'An error occurred.'
-  );
+  return get(error, 'response.data.message') || error.message;
 }
 
 function getFirstOfFieldErrors(error) {
@@ -49,15 +47,6 @@ async function validate({ name, schema, formState }) {
   }
 }
 
-function useForm(names) {
-  return useState({
-    error: null,
-    fieldErrors: names.reduce((a, v) => set(a, v, null), {}),
-    valid: true,
-    values: names.reduce((a, v) => set(a, v, ''), {})
-  });
-}
-
 function useModal() {
   return useState({
     modalContent: null,
@@ -65,55 +54,83 @@ function useModal() {
   });
 }
 
-function buildHandleBlur({ schema, setFormState, formState }) {
+function formReducer(state, action) {
+  switch (action.type) {
+    case 'change':
+      return {
+        ...state,
+        error: null,
+        fieldErrors: { ...state.fieldErrors, [action.name]: null },
+        valid: every(omit(state.fieldErrors, action.name), isNull),
+        values: { ...state.values, [action.name]: action.value }
+      };
+    case 'invalid fields':
+      const { fieldErrors } = action;
+      return { ...state, fieldErrors, valid: false };
+    case 'submit error':
+      const { error } = action;
+      return {
+        ...state,
+        error: getErrorMessage(error),
+        fieldErrors: getFirstOfFieldErrors(error),
+        valid: true
+      };
+    case 'submit start':
+      return { ...state, error: null, fieldErrors: {}, valid: false };
+    default:
+      return state;
+  }
+}
+
+function formReducerInit(names) {
+  return {
+    error: null,
+    fieldErrors: names.reduce((a, v) => set(a, v, null), {}),
+    valid: true,
+    values: names.reduce((a, v) => set(a, v, ''), {})
+  };
+}
+
+function useFormReducer(names) {
+  return useReducer(formReducer, names, formReducerInit);
+}
+
+function buildHandleBlur({ formDispatch, formState, schema }) {
   return async function(event) {
     const { name } = event.target;
     const fieldErrors = await validate({ name, schema, formState });
 
-    if (fieldErrors) setFormState({ ...formState, fieldErrors, valid: false });
+    if (fieldErrors) formDispatch({ type: 'invalid fields', fieldErrors });
   };
 }
 
-function buildHandleChange({ setFormState, formState }) {
+function buildHandleChange({ formDispatch }) {
   return function(event) {
     const { name, value } = event.target;
-
-    setFormState({
-      ...formState,
-      error: null,
-      fieldErrors: { ...formState.fieldErrors, [name]: null },
-      valid: every(omit(formState.fieldErrors, name), isNull),
-      values: { ...formState.values, [name]: value }
-    });
+    formDispatch({ type: 'change', name, value });
   };
 }
 
-function buildHandleSubmit({ callback, formState, setFormState }) {
+function buildHandleSubmit({ callback, formDispatch, formState }) {
   return async function(event) {
     event.preventDefault();
-
-    await setFormState({
-      ...formState,
-      error: null,
-      fieldErrors: {},
-      valid: false
-    });
+    formDispatch({ type: 'submit start' });
 
     const fieldErrors = await validate({ schema, formState });
 
     if (fieldErrors) {
-      return setFormState({ ...formState, fieldErrors, valid: false });
+      formDispatch({ type: 'invalid fields', fieldErrors });
     }
 
-    await callback();
+    if (callback) await callback();
   };
 }
 
 function buildSubmitCallback({
+  formDispatch,
   formState,
   modalState,
   serverApi,
-  setFormState,
   setModalState
 }) {
   return async function() {
@@ -131,12 +148,7 @@ function buildSubmitCallback({
 
       return setModalState({ ...modalState, modalContent, showModal: true });
     } catch (error) {
-      return setFormState({
-        ...formState,
-        error: getErrorMessage(error),
-        fieldErrors: getFirstOfFieldErrors(error),
-        valid: true
-      });
+      formDispatch({ type: 'submit error', error });
     }
   };
 }
@@ -153,19 +165,23 @@ const schema = yup.object().shape({
 export function SignupForm({ history, modalAriaHideApp }) {
   const { serverApi } = useContext(ServicesContext);
 
-  const [formState, setFormState] = useForm(['email', 'password', 'username']);
+  const [formState, formDispatch] = useFormReducer([
+    'email',
+    'password',
+    'username'
+  ]);
   const [modalState, setModalState] = useModal();
 
-  const handleBlur = buildHandleBlur({ schema, setFormState, formState });
-  const handleChange = buildHandleChange({ setFormState, formState });
+  const handleBlur = buildHandleBlur({ formDispatch, formState, schema });
+  const handleChange = buildHandleChange({ formDispatch });
   const callback = buildSubmitCallback({
+    formDispatch,
     formState,
     modalState,
     serverApi,
-    setFormState,
     setModalState
   });
-  const handleSubmit = buildHandleSubmit({ callback, setFormState, formState });
+  const handleSubmit = buildHandleSubmit({ callback, formDispatch, formState });
 
   const handleModalDismiss = () => history.push('/login');
 
