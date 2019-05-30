@@ -33,7 +33,7 @@ en:
   application_controller:
     common:
       param_errors: The information you provided was invalid.
-      service_error: We couldn't complete the request due to errors.
+      service_error: We couldn't complete your request due to errors.
   signup_confirmations_controller:
     update:
       success: Your account was successfully confirmed.
