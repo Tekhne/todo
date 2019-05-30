@@ -322,30 +322,28 @@ describe('SignupForm', function() {
     });
 
     describe('when the response is a failure', function() {
-      const error = {
-        response: {
-          data: {
-            fieldErrors: {
-              username: ['is invalid #1', 'is invalid #2']
-            },
-            message: 'test error'
-          }
+      const response = {
+        data: {
+          fieldErrors: {
+            username: ['is invalid #1', 'is invalid #2']
+          },
+          message: 'test error'
         }
       };
 
       beforeEach(function() {
-        services = { serverApi: { post: fake(() => Promise.reject(error)) } };
+        services = { serverApi: { post: fake(() => Promise.reject(response)) } };
       });
 
-      it('enables the form submission button', async function() {
+      it('disables the form submission button', async function() {
         const c = submitForm({ services });
-        await c.findByText(submitText, { selector: ':not([disabled])' });
+        await c.findByText(submitText, { selector: '[disabled]' });
       });
 
       describe('when response has a form error', function() {
         it('renders the form error', async function() {
           const c = submitForm({ services });
-          await c.findByText(error.response.data.message);
+          await c.findByText(response.data.message);
         });
       });
 
@@ -353,7 +351,7 @@ describe('SignupForm', function() {
         it('renders the field errors', async function() {
           const c = submitForm({ services });
           await c.findByText(
-            `Username ${error.response.data.fieldErrors.username[0]}.`
+            `Username ${response.data.fieldErrors.username[0]}.`
           );
         });
       });
