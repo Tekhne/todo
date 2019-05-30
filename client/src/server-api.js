@@ -4,7 +4,8 @@ import { get, has, set } from 'lodash';
 /* istanbul ignore next */
 export const routes = {
   login: () => '/api/login',
-  signup: () => '/api/signup'
+  signup: () => '/api/signup',
+  signupConfirmation: () => '/api/signup_confirmation'
 };
 
 const STATUS_TO_ERROR = new Map([
