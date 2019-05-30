@@ -1,0 +1,12 @@
+default: &default
+  session_key: :app_name_session
+  session_timeout_seconds: 1209600
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
