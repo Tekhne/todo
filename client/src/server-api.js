@@ -7,18 +7,16 @@ export const routes = {
   signup: () => '/api/signup'
 };
 
-/* istanbul ignore next */
+const STATUS_TO_ERROR = new Map([
+  [404, 'The location we sent your request to was missing.'],
+  [408, 'Your request timed out.'],
+  [429, 'The service is currently overloaded with requests']
+]);
+
 function buildErrorMessage(response) {
-  switch (response.status) {
-    case 404:
-      return 'The location we sent your request to is missing.';
-    case 408:
-      return 'Your request timed out.';
-    case 429:
-      return 'The service is currently overloaded with requests.';
-    default:
-      return 'An unexpected error occurred.';
-  }
+  return (
+    STATUS_TO_ERROR.get(response.status) || 'An unexpected error occurred.'
+  );
 }
 
 export class ServerApi {
@@ -51,7 +49,7 @@ export class ServerApi {
       response = error.response;
     }
 
-    if (response.status >= 400) {
+    if (!response.status || response.status >= 400) {
       if (get(response, 'data.message')) throw response;
       set(response, 'data.message', buildErrorMessage(response));
       throw response;
