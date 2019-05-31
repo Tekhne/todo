@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Welcome from './Welcome';
 import { MemoryRouter } from 'react-router';
 import { ServicesContext } from './ServicesContext';
-import { cleanup, render } from 'react-testing-library';
+import { cleanup, render } from '@testing-library/react';
 import { fake } from 'sinon';
 
 describe('Welcome', function() {

@@ -9,7 +9,7 @@ import {
   render,
   wait,
   waitForElement
-} from 'react-testing-library';
+} from '@testing-library/react';
 import { assert, fake } from 'sinon';
 import { get, repeat } from 'lodash';
 

@@ -1,7 +1,7 @@
 import Login from './Login';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { cleanup, render } from 'react-testing-library';
+import { cleanup, render } from '@testing-library/react';
 
 describe('Login', function() {
   this.timeout(5000);

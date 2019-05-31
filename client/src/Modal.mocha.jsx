@@ -2,7 +2,7 @@ import Modal from './Modal';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { assert, fake } from 'sinon';
-import { cleanup, fireEvent, render } from 'react-testing-library';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 
 const { click } = fireEvent;
 

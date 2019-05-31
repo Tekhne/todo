@@ -2,7 +2,7 @@ import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { MemoryRouter } from 'react-router';
-import { cleanup, render } from 'react-testing-library';
+import { cleanup, render } from '@testing-library/react';
 
 describe('App', function() {
   this.timeout(5000);

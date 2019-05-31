@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Viewport from './Viewport';
-import { cleanup, render } from 'react-testing-library';
+import { cleanup, render } from '@testing-library/react';
 
 describe('Viewport', function() {
   this.timeout(5000);

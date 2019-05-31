@@ -1,7 +1,7 @@
+import Content from './Content';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Content from './Content';
-import { cleanup, render } from 'react-testing-library';
+import { cleanup, render } from '@testing-library/react';
 
 describe('Content', function() {
   this.timeout(5000);
