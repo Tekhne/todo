@@ -1,10 +1,12 @@
 import Content from './Content';
+import Helmet from 'react-helmet';
 import Modal from './Modal';
 import Notice from './Notice';
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import ServicesContext from './ServicesContext';
 import Viewport from './Viewport';
+import { buildTitle } from './utils';
 import { get } from 'lodash';
 import { withRouter } from 'react-router';
 
@@ -41,37 +43,52 @@ export function SignupConfirmation({ history, match }) {
 
   if (confirmed) {
     return (
-      <Modal
-        handleDismiss={handleModalDismiss}
-        isOpen={true}
-        onRequestClose={handleModalDismiss}
-      >
-        <Notice dismissable={false} type="success">
-          You're account was successfully confirmed.
-        </Notice>
-      </Modal>
+      <>
+        <Helmet>
+          <title>{buildTitle('Signup Confirmation')}</title>
+        </Helmet>
+        <Modal
+          handleDismiss={handleModalDismiss}
+          isOpen={true}
+          onRequestClose={handleModalDismiss}
+        >
+          <Notice dismissable={false} type="success">
+            You're account was successfully confirmed.
+          </Notice>
+        </Modal>
+      </>
     );
   }
 
   if (error) {
     return (
-      <Viewport>
-        <Content>
-          <Notice dismissable={false} type="alert">
-            <p>{error}</p>
-            <p>You can try reloading the page or signing up again.</p>
-          </Notice>
-        </Content>
-      </Viewport>
+      <>
+        <Helmet>
+          <title>{buildTitle('Signup Confirmation')}</title>
+        </Helmet>
+        <Viewport>
+          <Content>
+            <Notice dismissable={false} type="alert">
+              <p>{error}</p>
+              <p>You can try reloading the page or signing up again.</p>
+            </Notice>
+          </Content>
+        </Viewport>
+      </>
     );
   }
 
   return (
-    <Viewport>
-      <Content>
-        <p>Confirming your account ...</p>
-      </Content>
-    </Viewport>
+    <>
+      <Helmet>
+        <title>{buildTitle('Signup Confirmation')}</title>
+      </Helmet>
+      <Viewport>
+        <Content>
+          <p>Confirming your account ...</p>
+        </Content>
+      </Viewport>
+    </>
   );
 }
 

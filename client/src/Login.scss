@@ -1,0 +1,11 @@
+.login {
+  align-items: center;
+  display: grid;
+  height: 80vh;
+  justify-items: center;
+
+  .login-form-wrapper {
+    max-width: 26rem;
+    width: 100%;
+  }
+}

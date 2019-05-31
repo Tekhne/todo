@@ -1,0 +1,14 @@
+.login-form {
+  .notice + .form-field {
+    margin-top: 1rem;
+  }
+
+  .form-button-wrapper,
+  .form-field + .form-field {
+    margin-top: 0.8rem;
+  }
+
+  .form-field-input-wrapper {
+    margin-top: 0.25rem;
+  }
+}

@@ -16,4 +16,6 @@ describe('Login', function() {
     const div = document.createElement('div');
     ReactDOM.render(<Login />, div);
   });
+
+  // FIXME add more tests once Enzyme supports hooks
 });

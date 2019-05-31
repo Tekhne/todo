@@ -3,12 +3,13 @@ import React from 'react';
 import SignupForm from './SignupForm';
 import Viewport from './Viewport';
 import { Helmet } from 'react-helmet';
+import { buildTitle } from './utils';
 
 export function Welcome() {
   return (
     <>
       <Helmet>
-        <title>Welcome - App Name</title>
+        <title>{buildTitle('Welcome')}</title>
       </Helmet>
       <Viewport>
         <Content className="welcome">
