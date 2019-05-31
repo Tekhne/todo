@@ -23,4 +23,4 @@ Since the primary options for testing aren't currently viable, I think the pract
 
 ## Servers
 
-Start the development server on port 4000 (`./bin/rails server -p 4000`), and the development client on port 3000 (default).
+Start the development server on port 4000 (`(cd server; ./bin/rails server -p 4000)`), and the development client on port 3000 (default).
