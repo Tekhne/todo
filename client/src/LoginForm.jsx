@@ -3,6 +3,7 @@ import Notice from './Notice';
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import ServicesContext from './ServicesContext';
+import { Link } from 'react-router-dom';
 import { useFormReducer } from './form-utils';
 import { withRouter } from 'react-router';
 
@@ -105,6 +106,9 @@ export function LoginForm({ history }) {
           </button>
         </div>
       </form>
+      <div className="signup-link">
+        Don't have an account? <Link to="/welcome">Sign up &rarr;</Link>
+      </div>
     </div>
   );
 }

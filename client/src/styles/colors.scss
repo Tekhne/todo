@@ -41,6 +41,9 @@ $color-input-border: lighten($color-grey, 40%);
 $color-input-field-has-error-background: rgba($color-red, 0.08);
 $color-input-placeholder: lighten($color-grey, 20%);
 
+$color-link: $color-blue;
+$color-link-focus: lighten($color-link, 20%);
+
 $color-modal-content-border: lighten($color-grey, 30%);
 $color-modal-dismiss-wrapper-border: lighten($color-grey, 40%);
 $color-modal-overlay-background: rgba($color-white, 0.85);

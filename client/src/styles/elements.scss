@@ -1,3 +1,14 @@
+a {
+  color: $color-link;
+  text-decoration: none;
+
+  &:focus,
+  &:hover {
+    color: $color-link-focus;
+    text-decoration: underline;
+  }
+}
+
 button {
   background-color: $color-button-background;
   border-radius: $border-radius;

@@ -4,6 +4,7 @@ import Notice from './Notice';
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import ServicesContext from './ServicesContext';
+import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 import { useFormReducer } from './form-utils';
 import { withRouter } from 'react-router';
@@ -165,6 +166,9 @@ export function SignupForm({ history, modalAriaHideApp }) {
             </button>
           </div>
         </form>
+        <div className="login-link">
+          Already signed up? <Link to="/login">Log in &rarr;</Link>
+        </div>
       </div>
       <Modal
         ariaHideApp={modalAriaHideApp}
