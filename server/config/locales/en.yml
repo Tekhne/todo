@@ -39,6 +39,8 @@ en:
       invalid_credentials: The username or password you provided was invalid.
       success: You were successfully logged in.
       unconfirmed_email_address: You must confirm your email address before logging in. Please check your email for the confirmation notice sent at sign up.
+    destroy:
+      success: You were successfully logged out.
   signup_confirmations_controller:
     update:
       success: Your account was successfully confirmed.

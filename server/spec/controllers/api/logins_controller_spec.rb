@@ -88,4 +88,23 @@ RSpec.describe Api::LoginsController, type: :controller do
         eq(I18n.t('logins_controller.create.success'))
     end
   end
+
+  describe 'DELETE #destroy' do
+    it { is_expected.to route(:delete, '/api/login').to(action: :destroy) }
+
+    it 'assigns @message' do
+      delete :destroy, as: :json
+      expect(assigns(:message)).to \
+        eq(I18n.t('logins_controller.destroy.success'))
+    end
+
+    it 'unsets session cookie' do
+      cookies = instance_double('ActionDispatch::Cookies::CookieJar')
+      allow(cookies).to receive(:delete)
+      allow(controller).to receive(:cookies).and_return(cookies)
+      delete :destroy, as: :json
+      expect(cookies).to \
+        have_received(:delete).with(Rails.configuration.server['session_key'])
+    end
+  end
 end

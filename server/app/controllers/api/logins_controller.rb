@@ -15,6 +15,15 @@ class Api::LoginsController < ApplicationController
     end
   end
 
+  def destroy
+    respond_to do |format|
+      format.json do
+        @message = I18n.t('logins_controller.destroy.success')
+        unset_session_cookie
+      end
+    end
+  end
+
   private
 
   def create_params
@@ -36,5 +45,9 @@ class Api::LoginsController < ApplicationController
     value[:expires] = session_expiration
     session[:value] = JSON.generate(value)
     cookies.encrypted[Rails.configuration.server['session_key']] = session
+  end
+
+  def unset_session_cookie
+    cookies.delete Rails.configuration.server['session_key']
   end
 end
