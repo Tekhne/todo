@@ -4,7 +4,6 @@ import { get, has, set } from 'lodash';
 /* istanbul ignore next */
 export const routes = {
   login: () => '/api/login',
-  logout: () => '/api/logout',
   signup: () => '/api/signup',
   signupConfirmation: () => '/api/signup_confirmation'
 };
@@ -25,6 +24,11 @@ export class ServerApi {
   /* istanbul ignore next */
   constructor({ ajax } = {}) {
     this.ajax = ajax || axios;
+  }
+
+  /* istanbul ignore next */
+  delete(args) {
+    return this.send({ method: 'delete', ...args });
   }
 
   /* istanbul ignore next */

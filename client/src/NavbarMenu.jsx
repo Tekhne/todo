@@ -37,7 +37,7 @@ export function NavbarMenu({ history }) {
 
   const handleLogoutClick = async () => {
     try {
-      await serverApi.post({ route: 'logout' });
+      await serverApi.delete({ route: 'login' });
       authnDispatch({ type: 'logout' });
       history.push('/login');
     } catch (error) {
