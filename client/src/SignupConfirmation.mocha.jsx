@@ -1,12 +1,7 @@
-import SignupConfirmation from './SignupConfirmation';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SignupConfirmation from './SignupConfirmation';
 
 describe('SignupConfirmation', function() {
-  it('renders successfully', function() {
-    const container = document.createElement('div');
-    ReactDOM.render(<SignupConfirmation />, container);
-  });
-
-  // FIXME add more tests once Enzyme supports hooks
+  // FIXME add tests once Enzyme supports hooks
 });

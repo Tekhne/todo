@@ -1,7 +1,7 @@
-import App from './App';
+import NavbarMenu from './NavbarMenu';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-describe('App', function() {
+describe('NavbarMenu', function() {
   // FIXME add tests once Enzyme supports hooks
 });

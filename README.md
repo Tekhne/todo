@@ -16,7 +16,7 @@ A recent alternative to `enzyme` that's starting to become popular is `@testing-
 
 That leaves React itself. However, at-a-glance, it looks like effectively using the utilities that come with React would require writing a lot of test support code. It doesn't seem to worth it since that's what `enzyme` is already trying to do. I just have to wait for `enzyme` to support hooks.
 
-Since the primary options for testing aren't currently viable, I think the practical (and painful) choice is to avoid writting any more React tests for now. I will, however, leave what I've already written, and stub out new test files for later use. Instead of writing automated tests, I'll lean on manual testing, debugging tools, and programming techniques. Once `enzyme` supports hooks, I'll backfill tests for existing components, and return to the practice of building tests along with new components.
+Since the primary options for testing aren't currently viable, I think the practical (and painful) choice is to avoid writting any more React tests for now, but only because this is a demo, and not a production app. If this were a production app, I would avoid using hooks until the community support was solid, and just continue using class based components, as needed. I will, however, stub out test files for later use. Instead of writing automated tests, I'll lean on manual testing, debugging tools, and programming techniques. Once `enzyme` supports hooks, I'll backfill tests for existing components, and return to the practice of building tests along with new components.
 
 
 # Development Environment
