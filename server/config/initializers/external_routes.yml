@@ -7,13 +7,13 @@ development:
   <<: *default
   :external_routes:
     :root_url: http://localhost:3000
-    :signup_confirmation_url_base: https://localhost:3000/signup-confirmation/
+    :signup_confirmation_url_base: http://localhost:3000/signup-confirmation/
 
 test:
   <<: *default
   :external_routes:
     :root_url: http://localhost:3000
-    :signup_confirmation_url_base: https://localhost:3000/signup-confirmation/
+    :signup_confirmation_url_base: http://localhost:3000/signup-confirmation/
 
 production:
   <<: *default
