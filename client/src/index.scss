@@ -2,6 +2,10 @@
 
 @import-normalize;
 
+body {
+  margin: 0;
+}
+
 @import './styles/colors';
 @import './styles/layout';
 @import './styles/typography';
@@ -17,6 +21,8 @@
 @import './Login';
 @import './LoginForm';
 @import './Modal';
+@import './Navbar';
+@import './NavbarMenu';
 @import './Notice';
 @import './SignupForm';
 @import './Viewport';

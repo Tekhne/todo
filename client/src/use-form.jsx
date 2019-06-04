@@ -93,7 +93,7 @@ function formReducer(state, action) {
   }
 }
 
-export function formReducerInit(names) {
+function formReducerInit(names) {
   return {
     error: null,
     fieldErrors: names.reduce((a, v) => set(a, v, null), {}),
@@ -112,7 +112,7 @@ function getFirstOfFieldErrors(error) {
   return mapValues(errors, v => v[0]);
 }
 
-export function useFormReducer({
+export function useForm({
   fieldNames,
   submitCallback,
   validationSchema

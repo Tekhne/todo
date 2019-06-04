@@ -1,0 +1,84 @@
+import Modal from './Modal';
+import Notice from './Notice';
+import React, { useEffect, useState } from 'react';
+import { get } from 'lodash';
+import { useAppContext } from './use-app-context';
+import { useModal } from './use-modal';
+import { withRouter } from 'react-router';
+
+export function NavbarMenu({ history }) {
+  const { authn, serverApi } = useAppContext();
+  const { authnState, authnDispatch } = authn;
+  const [showMenu, setShowMenu] = useState(false);
+  const [modalState, setModalState] = useModal();
+
+  useEffect(() => {
+    const handleWindowClick = event => {
+      if (!showMenu) return;
+      const className = event.target.className;
+
+      if (
+        className !== 'navbar-menu-title' &&
+        className !== 'navbar-menu-item'
+      ) {
+        setShowMenu(false);
+      }
+    };
+
+    window.addEventListener('click', handleWindowClick);
+    return () => window.removeEventListener('click', handleWindowClick);
+  });
+
+  if (!authnState.isLoggedIn) return null;
+
+  const handleMenuClick = () => {
+    setShowMenu(!showMenu);
+  };
+
+  const handleLogoutClick = async () => {
+    try {
+      await serverApi.post({ route: 'logout' });
+      authnDispatch({ type: 'logout' });
+      history.push('/login');
+    } catch (error) {
+      const modalContent = (
+        <Notice dismissable={false} type="alert">
+          {get(error, 'data.message')}
+        </Notice>
+      );
+
+      setModalState({ modalContent, showModal: true });
+    }
+  };
+
+  const handleModalDismiss = () => {
+    setModalState({ modalContent: null, showModal: false });
+  };
+
+  return (
+    <>
+      <span className="navbar-menu">
+        <span className="navbar-menu-title" onClick={handleMenuClick}>
+          <span className="navbar-menu-icon">&#9776;</span>
+          Menu
+        </span>
+        {showMenu && (
+          <div className="navbar-menu-dropdown">
+            <div className="navbar-menu-item" onClick={handleLogoutClick}>
+              Log out
+            </div>
+          </div>
+        )}
+      </span>
+      <Modal
+        handleDismiss={handleModalDismiss}
+        isOpen={modalState.showModal}
+        onRequestClose={handleModalDismiss}
+      >
+        {modalState.modalContent}
+      </Modal>
+    </>
+  );
+}
+
+export default withRouter(NavbarMenu);

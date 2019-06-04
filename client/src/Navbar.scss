@@ -1,0 +1,30 @@
+.navbar-wrapper {
+  background-color: $color-blue;
+  color: $color-white;
+
+  .navbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0.5rem;
+  }
+
+  .navbar-logo {
+    align-self: center;
+    font-size: 1.5rem;
+    justify-self: start;
+
+    a {
+      color: $color-white;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .navbar-menu-wrapper {
+    align-self: center;
+    justify-self: end;
+  }
+}

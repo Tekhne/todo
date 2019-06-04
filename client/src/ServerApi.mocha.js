@@ -1,5 +1,5 @@
 import expect from 'expect';
-import { ServerApi, routes } from './server-api';
+import { ServerApi, routes } from './ServerApi';
 import { assert, fake } from 'sinon';
 
 describe('ServerApi', function() {

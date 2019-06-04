@@ -1,10 +1,10 @@
 import * as yup from 'yup';
 import Notice from './Notice';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
-import ServicesContext from './ServicesContext';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useFormReducer } from './form-utils';
+import { useAppContext } from './use-app-context';
+import { useForm } from './use-form';
 import { withRouter } from 'react-router';
 
 const propTypes = {
@@ -16,10 +16,11 @@ const validationSchema = yup.object().shape({
   username: yup.string().required('is required')
 });
 
-function buildSubmitCallback({ history, serverApi }) {
+function buildSubmitCallback({ authnDispatch, history, serverApi }) {
   return async function({ formDispatch, formState }) {
     try {
       await serverApi.post({ data: formState.values, route: 'login' });
+      authnDispatch({ type: 'login' });
       history.push('/todos');
     } catch (error) {
       formDispatch({ type: 'submit:error', error });
@@ -29,11 +30,11 @@ function buildSubmitCallback({ history, serverApi }) {
 }
 
 export function LoginForm({ history }) {
-  const { serverApi } = useContext(ServicesContext);
+  const { authn: { authnDispatch }, serverApi } = useAppContext();
 
-  const { formState, handleBlur, handleChange, handleSubmit } = useFormReducer({
+  const { formState, handleBlur, handleChange, handleSubmit } = useForm({
     fieldNames: ['email', 'username'],
-    submitCallback: buildSubmitCallback({ history, serverApi }),
+    submitCallback: buildSubmitCallback({ authnDispatch, history, serverApi }),
     validationSchema
   });
 

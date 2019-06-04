@@ -4,14 +4,15 @@ import { get, has, set } from 'lodash';
 /* istanbul ignore next */
 export const routes = {
   login: () => '/api/login',
+  logout: () => '/api/logout',
   signup: () => '/api/signup',
   signupConfirmation: () => '/api/signup_confirmation'
 };
 
 const STATUS_TO_ERROR = new Map([
-  [404, 'The location we sent your request to was missing.'],
-  [408, 'Your request timed out.'],
-  [429, 'The service is currently overloaded with requests']
+  [404, 'The network location we sent your request to was missing.'],
+  [408, 'Your network request timed out.'],
+  [429, 'The network service is currently overloaded with requests.']
 ]);
 
 function buildErrorMessage(response) {

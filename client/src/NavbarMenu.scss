@@ -1,0 +1,33 @@
+.navbar-menu {
+  position: relative;
+
+  .navbar-menu-title {
+    cursor: pointer;
+  }
+
+  .navbar-menu-icon {
+    font-size: 1.4rem;
+  }
+
+  .navbar-menu-dropdown {
+    background-color: $color-white;
+    border-radius: $border-radius;
+    border: 1px solid $color-border;
+    box-shadow: $box-shadow-sm;
+    color: $color-black;
+    padding: 0.25rem;
+    position: absolute;
+    right: 0.1rem;
+    top: 1.5rem;
+    width: 5rem;
+  }
+
+  .navbar-menu-item {
+    cursor: pointer;
+    padding: 0.25rem;
+
+    &:hover {
+      background-color: rgba($color-blue, 0.1);
+    }
+  }
+}

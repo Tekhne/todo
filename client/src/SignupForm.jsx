@@ -2,11 +2,12 @@ import * as yup from 'yup';
 import Modal from './Modal';
 import Notice from './Notice';
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
-import ServicesContext from './ServicesContext';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { get } from 'lodash';
-import { useFormReducer } from './form-utils';
+import { useAppContext } from './use-app-context';
+import { useForm } from './use-form';
+import { useModal } from './use-modal';
 import { withRouter } from 'react-router';
 
 const propTypes = {
@@ -17,13 +18,6 @@ const propTypes = {
 const defaultProps = {
   modalAriaHideApp: true
 };
-
-function useModal() {
-  return useState({
-    modalContent: null,
-    showModal: false
-  });
-}
 
 function buildSubmitCallback({ modalState, serverApi, setModalState }) {
   return async function({ formDispatch, formState }) {
@@ -57,10 +51,10 @@ const validationSchema = yup.object().shape({
 });
 
 export function SignupForm({ history, modalAriaHideApp }) {
-  const { serverApi } = useContext(ServicesContext);
+  const { serverApi } = useAppContext();
   const [modalState, setModalState] = useModal();
 
-  const { formState, handleBlur, handleChange, handleSubmit } = useFormReducer({
+  const { formState, handleBlur, handleChange, handleSubmit } = useForm({
     fieldNames: ['email', 'password', 'username'],
     submitCallback: buildSubmitCallback({
       modalState,

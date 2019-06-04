@@ -3,11 +3,11 @@ import Helmet from 'react-helmet';
 import Modal from './Modal';
 import Notice from './Notice';
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
-import ServicesContext from './ServicesContext';
+import React, { useEffect, useState } from 'react';
 import Viewport from './Viewport';
 import { buildTitle } from './utils';
 import { get } from 'lodash';
+import { useAppContext } from './use-app-context';
 import { withRouter } from 'react-router';
 
 const propTypes = {
@@ -16,7 +16,7 @@ const propTypes = {
 };
 
 export function SignupConfirmation({ history, match }) {
-  const { serverApi } = useContext(ServicesContext);
+  const { serverApi } = useAppContext();
 
   const [confirmed, setConfirmed] = useState(false);
   const [error, setError] = useState(null);
