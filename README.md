@@ -1,6 +1,6 @@
 # Overview
 
-This is a todo application using React and Ruby on Rails.
+This is a work-in-progress todo application using React and Ruby on Rails.
 
 # Tests
 
