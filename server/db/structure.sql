@@ -5,6 +5,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -125,6 +126,38 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: todo_items; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.todo_items (
+    id bigint NOT NULL,
+    account_id bigint NOT NULL,
+    description character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: todo_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.todo_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: todo_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.todo_items_id_seq OWNED BY public.todo_items.id;
+
+
+--
 -- Name: token_credentials; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -207,6 +240,13 @@ ALTER TABLE ONLY public.email_addresses ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: todo_items id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.todo_items ALTER COLUMN id SET DEFAULT nextval('public.todo_items_id_seq'::regclass);
+
+
+--
 -- Name: token_credentials id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -253,6 +293,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: todo_items todo_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.todo_items
+    ADD CONSTRAINT todo_items_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: token_credentials token_credentials_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -287,6 +335,13 @@ CREATE INDEX index_email_addresses_on_account_id ON public.email_addresses USING
 --
 
 CREATE INDEX index_email_addresses_on_email ON public.email_addresses USING btree (email);
+
+
+--
+-- Name: index_todo_items_on_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_todo_items_on_account_id ON public.todo_items USING btree (account_id);
 
 
 --
@@ -341,6 +396,14 @@ ALTER TABLE ONLY public.token_credentials
 
 
 --
+-- Name: todo_items fk_rails_9a71ffdf5d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.todo_items
+    ADD CONSTRAINT fk_rails_9a71ffdf5d FOREIGN KEY (account_id) REFERENCES public.accounts(id);
+
+
+--
 -- Name: email_addresses fk_rails_b5f765e7ff; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -360,6 +423,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190429162136'),
 ('20190429170737'),
 ('20190429184734'),
-('20190430193519');
+('20190430193519'),
+('20190607201532');
 
 
