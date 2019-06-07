@@ -15,6 +15,7 @@ RSpec.describe Account, type: :model do
   end
 
   context 'with associations' do
+    it { is_expected.to have_many(:todo_items).dependent(:destroy) }
     it { is_expected.to have_many(:token_credentials).dependent(:destroy) }
     it { is_expected.to have_one(:email_address).dependent(:destroy) }
     it { is_expected.to have_one(:username_credential).dependent(:destroy) }
