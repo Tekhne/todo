@@ -1,4 +1,6 @@
 class Api::SignupsController < ApplicationController
+  skip_before_action :authenticate, only: %i[create]
+
   def create
     respond_to do |format|
       format.json do

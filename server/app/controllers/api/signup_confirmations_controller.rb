@@ -1,4 +1,6 @@
 class Api::SignupConfirmationsController < ApplicationController
+  skip_before_action :authenticate, only: %i[update]
+
   def update
     respond_to do |format|
       format.json do

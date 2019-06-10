@@ -1,4 +1,6 @@
 class Api::LoginsController < ApplicationController
+  skip_before_action :authenticate, only: %i[create destroy]
+
   def create
     respond_to do |format|
       format.json do
