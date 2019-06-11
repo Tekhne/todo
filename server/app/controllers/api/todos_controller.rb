@@ -4,6 +4,7 @@ class Api::TodosController < ApplicationController
       format.json do
         @todo_item = Todos.new.create(current_account, create_params)
         @message = I18n.t('api.todos_controller.create.success')
+        render status: :created
       rescue Todos::ParamErrors => e
         @message = I18n.t('application_controller.common.param_errors')
         @param_errors = e.errors

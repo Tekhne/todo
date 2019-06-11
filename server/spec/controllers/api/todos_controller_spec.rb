@@ -39,6 +39,11 @@ RSpec.describe Api::TodosController, type: :controller do
         expect(assigns(:message)).to \
           eq(I18n.t('api.todos_controller.create.success'))
       end
+
+      it 'renders status :created' do
+        post :create, as: :json, params: params
+        expect(response).to have_http_status(:created)
+      end
     end
 
     describe 'when creating new todo fails with param error' do
