@@ -46,7 +46,8 @@ RSpec.describe ApplicationController do
 
         it 'renders JSON error message' do
           get :index, as: :json
-          expect(JSON.parse(response.body)).to have_key('message')
+          expect(JSON.parse(response.body)['message']).to \
+            eq(I18n.t('application_controller.common.authn_error'))
         end
 
         it 'renders status :unauthorized' do

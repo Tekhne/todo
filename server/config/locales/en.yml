@@ -34,6 +34,7 @@ en:
     common:
       param_errors: The information you provided was invalid.
       service_error: We couldn't complete your request due to errors. We'll work on fixing the problem as soon as possible.
+      authn_error: Your login credentials were invalid.
   api:
     todos_controller:
       create:

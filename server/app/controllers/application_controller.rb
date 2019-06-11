@@ -40,10 +40,7 @@ class ApplicationController < ActionController::Base
 
   def render_unauthorized
     cookies.delete Rails.configuration.server['session_key']
-
-    render(
-      json: { message: 'Your credentials are invalid.' },
-      status: :unauthorized
-    )
+    json = { message: I18n.t('application_controller.common.authn_error') }
+    render json: json, status: :unauthorized
   end
 end
