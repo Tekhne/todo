@@ -1,4 +1,5 @@
-# Requires that an `account` let block is already defined.
+# Requires that an `account` let block is already defined. We may want to try
+# and parameterize this shared context later.
 RSpec.shared_context 'controller authentication' do
   def build_cookie_value(**kwargs)
     JSON.generate(account_id: kwargs[:account].id, expires: kwargs[:expires])
