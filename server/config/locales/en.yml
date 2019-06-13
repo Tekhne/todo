@@ -32,9 +32,10 @@
 en:
   application_controller:
     common:
+      authn_error: Your login credentials were invalid.
       param_errors: The information you provided was invalid.
       service_error: We couldn't complete your request due to errors. We'll work on fixing the problem as soon as possible.
-      authn_error: Your login credentials were invalid.
+      success: Your request was completed successfully.
   api:
     todos_controller:
       create:

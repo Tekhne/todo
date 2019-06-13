@@ -2,21 +2,62 @@ require 'rails_helper'
 require_relative '../../support/contexts/controller_authentication'
 
 RSpec.describe Api::TodosController, type: :controller do
+  include_context 'controller authentication'
+
+  let(:account) { build(:account, id: 777) }
+  let(:todos) { instance_double('Todos') }
+
+  before do
+    allow(Todos).to receive(:new).and_return(todos)
+  end
+
+  describe 'GET #index' do
+    let(:todo_items_arel) { double('TodoItem::ActiveRecord_Relation') }
+
+    before do
+      allow(todos).to receive(:list).and_return(todo_items_arel)
+    end
+
+    it { is_expected.to route(:get, '/api/todos').to(action: :index) }
+
+    it 'assigns @todo_items' do
+      get :index, as: :json
+      expect(assigns(:todo_items)).to eq(todo_items_arel)
+    end
+
+    it 'assigns @message' do
+      get :index, as: :json
+      expect(assigns(:message)).to \
+        eq(I18n.t('application_controller.common.success'))
+    end
+
+    context 'when generating list of todo items fails' do
+      before do
+        allow(todos).to receive(:list).and_raise(Todos::ServiceError.new)
+      end
+
+      it 'assigns @message' do
+        get :index, as: :json
+        expect(assigns(:message)).to \
+          eq(I18n.t('application_controller.common.service_error'))
+      end
+
+      it 'renders status :internal_server_error' do
+        get :index, as: :json
+        expect(response).to have_http_status(:internal_server_error)
+      end
+    end
+  end
+
   describe 'POST #create' do
-    include_context 'controller authentication'
-
-    let(:account) { build(:account, id: 777) }
-
     let(:create_params) do
       ActionController::Parameters.new(params).permit(:todo)
     end
 
     let(:params) { { 'todo' => 'do something' } }
     let(:todo_item) { build(:todo_item) }
-    let(:todos) { instance_double('Todos') }
 
     before do
-      allow(Todos).to receive(:new).and_return(todos)
       allow(todos).to receive(:create).and_return(todo_item)
     end
 

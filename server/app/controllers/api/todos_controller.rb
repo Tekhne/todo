@@ -1,4 +1,16 @@
 class Api::TodosController < ApplicationController
+  def index
+    respond_to do |format|
+      format.json do
+        @todo_items = Todos.new.list(current_account)
+        @message = I18n.t('application_controller.common.success')
+      rescue Todos::ServiceError
+        @message = I18n.t('application_controller.common.service_error')
+        render status: :internal_server_error
+      end
+    end
+  end
+
   def create
     respond_to do |format|
       format.json do
