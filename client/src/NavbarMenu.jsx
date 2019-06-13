@@ -1,6 +1,7 @@
 import Modal from './Modal';
 import Notice from './Notice';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 import { useAppContext } from './use-app-context';
 import { useModal } from './use-modal';
@@ -29,7 +30,13 @@ export function NavbarMenu({ history }) {
     return () => window.removeEventListener('click', handleWindowClick);
   });
 
-  if (!authnState.isLoggedIn) return null;
+  if (!authnState.isLoggedIn) {
+    return (
+      <span className="navbar-menu">
+        <Link to="/login">Log in &rarr;</Link>
+      </span>
+    );
+  }
 
   const handleMenuClick = () => {
     setShowMenu(!showMenu);
