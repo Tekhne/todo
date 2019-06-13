@@ -5,7 +5,8 @@ import { get, has, set } from 'lodash';
 export const routes = {
   login: () => '/api/login',
   signup: () => '/api/signup',
-  signupConfirmation: () => '/api/signup_confirmation'
+  signupConfirmation: () => '/api/signup_confirmation',
+  todos: () => '/api/todos'
 };
 
 const STATUS_TO_ERROR = new Map([
