@@ -10,7 +10,7 @@ export const routes = {
 };
 
 const STATUS_TO_ERROR = new Map([
-  [404, 'The network location we sent your request to was missing.'],
+  [404, 'The network location we sent a request to was missing.'],
   [408, 'Your network request timed out.'],
   [429, 'The network service is currently overloaded with requests.']
 ]);
