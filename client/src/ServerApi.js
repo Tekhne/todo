@@ -28,6 +28,11 @@ export class ServerApi {
   }
 
   /* istanbul ignore next */
+  get(args) {
+    return this.send({ method: 'get', ...args });
+  }
+
+  /* istanbul ignore next */
   delete(args) {
     return this.send({ method: 'delete', ...args });
   }
