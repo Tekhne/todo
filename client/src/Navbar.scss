@@ -17,6 +17,7 @@
       color: $color-white;
       text-decoration: none;
 
+      &:focus,
       &:hover {
         text-decoration: none;
       }
