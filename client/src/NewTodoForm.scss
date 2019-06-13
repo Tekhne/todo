@@ -1,0 +1,39 @@
+.new-todo-form {
+  margin-top: 1rem;
+
+  .form-field {
+    display: grid;
+    grid-template-columns: 1fr min-content;
+  }
+
+  .icons {
+    align-self: center;
+    margin-left: 0.2rem;
+  }
+
+  .icon {
+    border-radius: $border-radius;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.3rem;
+  }
+
+  .icon-add {
+    color: $color-blue;
+
+    &:focus,
+    &:hover {
+      background-color: $color-blue-focus;
+    }
+  }
+
+  .icon-delete {
+    color: $color-red;
+
+    &:focus,
+    &:hover {
+      background-color: $color-red-focus;
+    }
+  }
+}

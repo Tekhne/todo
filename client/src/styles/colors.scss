@@ -1,6 +1,7 @@
 // https://coolors.co/0d72c2-98b8cf-7d8185-191a1a-ffffff
 // https://coolors.co/c12e0d-c1a60d-3daf0c-191a1a-ffffff
 
+
 $color-black: #191a1a;
 $color-blue-alt: #98b8cf;
 $color-blue: #0d72c2;
@@ -9,6 +10,9 @@ $color-grey: #7d8185;
 $color-red: #c12e0d;
 $color-white: #ffffff;
 $color-yellow: #c1a60d;
+
+$color-blue-focus: #cfe3f3;
+$color-red-focus: #faeeec;
 
 $color-green-bg-dark: lighten($color-green, 5%);
 $color-green-bg: lighten($color-green, 10%);
@@ -24,7 +28,7 @@ $color-yellow-bg: lighten($color-yellow, 20%);
 $color-yellow-fg: darken($color-yellow, 20%);
 
 $color-border-transparent: rgba(lighten($color-grey, 15%), 0.3);
-$color-border: lighten($color-grey, 20%);
+$color-border: lighten($color-grey, 30%);
 
 $color-box-shadow-input: rgba($color-black, 0.18);
 $color-box-shadow-sm: rgba($color-black, 0.3);
@@ -36,9 +40,11 @@ $color-button-background: lighten($color-grey, 30%);
 $color-button-call-to-action-background-active: lighten($color-green, 15%);
 $color-button-call-to-action-background: lighten($color-green, 10%);
 
-$color-input-background-focus: rgba($color-blue, 0.08);
+$color-hint: lighten($color-grey, 20%);
+
+$color-input-background-focus: $color-blue-focus;
 $color-input-border: lighten($color-grey, 40%);
-$color-input-field-has-error-background: rgba($color-red, 0.08);
+$color-input-field-has-error-background: $color-red-focus;
 $color-input-placeholder: lighten($color-grey, 20%);
 
 $color-link: $color-blue;

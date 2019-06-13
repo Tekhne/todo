@@ -83,8 +83,8 @@ function formReducer(state, action) {
       return {
         ...state,
         error: getErrorMessage(error),
-        fieldErrors: getFirstOfFieldErrors(error),
-        valid: true
+        fieldErrors: getFirstOfFieldErrors(error)
+        // valid: true // XXX: this might be necessary so user can re-submit
       };
     case 'submit:start':
       return { ...state, submitting: true };

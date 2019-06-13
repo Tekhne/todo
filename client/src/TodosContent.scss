@@ -1,0 +1,47 @@
+.todos-content {
+  max-width: 40rem;
+
+  @media (min-width: 35rem) {
+    margin-top: 2rem;
+  }
+
+  .header {
+    align-items: end;
+    border-bottom: 1px solid $color-border;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-bottom: 0.5rem;
+  }
+
+  .title {
+    font-size: $font-size-h1;
+    font-weight: bold;
+  }
+
+  .menu {
+    justify-self: end;
+  }
+
+  .menu-item {
+    border-radius: $border-radius;
+    padding: 0.3rem;
+    text-align: center;
+
+    &:focus,
+    &:hover {
+      background-color: $color-blue-focus;
+      cursor: pointer;
+    }
+  }
+
+  .menu-icon {
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 1.375rem;
+  }
+
+  .plus-icon {
+    color: $color-blue;
+  }
+}

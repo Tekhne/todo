@@ -1,5 +1,7 @@
 import Helmet from 'react-helmet';
 import React from 'react';
+import TodosContent from './TodosContent';
+import TodosProvider from './TodosProvider';
 import { buildTitle } from './utils';
 
 export function Todos() {
@@ -8,7 +10,9 @@ export function Todos() {
       <Helmet>
         <title>{buildTitle('Todos')}</title>
       </Helmet>
-      <span>Todos</span>
+      <TodosProvider>
+        <TodosContent />
+      </TodosProvider>
     </>
   );
 }

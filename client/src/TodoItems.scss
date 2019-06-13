@@ -1,0 +1,16 @@
+.todo-items {
+  .add-hint,
+  .loading-hint {
+    color: $color-hint;
+  }
+
+  .todo-items-list {
+    list-style-type: none;
+    margin: 0.5rem 0 0 0;
+    padding-left: 0;
+  }
+}
+
+.new-todo-form + .todo-items {
+  margin-top: 2rem;
+}
