@@ -15,4 +15,11 @@ class Todos
     log_exception e
     raise ServiceError.new
   end
+
+  def list(account)
+    TodoItem.where(account: account).all
+  rescue StandardError => e
+    log_exception e
+    raise ServiceError.new
+  end
 end

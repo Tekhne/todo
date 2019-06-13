@@ -97,4 +97,43 @@ RSpec.describe Todos do
       expect(todos.create(account, params)).to eq(todo_item)
     end
   end
+
+  describe '#list' do
+    let(:account) { build(:account) }
+    let(:todo_items_arel) { double('TodoItem::ActiveRecord_Relation') }
+    let(:where_arel) { double('TodoItem::ActiveRecord_Relation') }
+
+    before do
+      allow(TodoItem).to \
+        receive(:where).with(account: account).and_return(where_arel)
+      allow(where_arel).to receive(:all).and_return(todo_items_arel)
+    end
+
+    it 'returns list of todos for given account' do
+      expect(todos.list(account)).to eq(todo_items_arel)
+    end
+
+    context 'when searching for todos fails' do
+      let(:exception) { StandardError.new }
+
+      before do
+        allow(where_arel).to receive(:all).and_raise(exception)
+        allow(todos).to receive(:log_exception)
+      end
+
+      it 'logs exception' do
+        begin
+          todos.list(account)
+        rescue Todos::ServiceError
+          # noop
+        end
+
+        expect(todos).to have_received(:log_exception).with(exception)
+      end
+
+      it 'raises Todos::ServiceError' do
+        expect { todos.list(account) }.to raise_error(Todos::ServiceError)
+      end
+    end
+  end
 end
