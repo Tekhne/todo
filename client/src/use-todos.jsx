@@ -20,6 +20,8 @@ function todosReducer(state, action) {
       return { ...state, todos: uniqTodos([...state.todos, action.todo]) };
     case 'todo:addMany':
       return { ...state, todos: uniqTodos([...state.todos, ...action.todos]) };
+    case 'todo:delete':
+      return { ...state, todos: state.todos.filter(t => t.id !== action.id) };
     default:
       throw new Error(`unknown reducer action type: ${action.type}`);
   }

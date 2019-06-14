@@ -6,7 +6,7 @@ export const routes = {
   login: () => '/api/login',
   signup: () => '/api/signup',
   signupConfirmation: () => '/api/signup_confirmation',
-  todos: () => '/api/todos'
+  todos: r => (get(r, 'id') ? `/api/todos/${r.id}` : '/api/todos')
 };
 
 const STATUS_TO_ERROR = new Map([
@@ -42,7 +42,7 @@ export class ServerApi {
     return this.send({ method: 'post', ...args });
   }
 
-  async send({ data, method, route }) {
+  async send({ data, method, route, routeData }) {
     if (!has(routes, route)) throw new Error(`bad route: ${route}`);
     let response;
 
@@ -54,7 +54,7 @@ export class ServerApi {
           Accept: 'application/json'
         },
         method,
-        url: routes[route]()
+        url: routes[route](routeData)
       });
     } catch (error) {
       if (!error.response) throw error;
