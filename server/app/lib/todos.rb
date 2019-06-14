@@ -22,4 +22,13 @@ class Todos
     log_exception e
     raise ServiceError.new
   end
+
+  def destroy(account, params)
+    TodoItem.find_by!(account: account, id: params[:id]).destroy!
+  rescue ActiveRecord::RecordNotFound
+    raise ParamErrors.new(errors: { id: I18n.t('errors.messages.invalid') })
+  rescue StandardError => e
+    log_exception e
+    raise ServiceError.new
+  end
 end

@@ -3,18 +3,20 @@ require 'rails_helper'
 RSpec.describe Todos do
   subject(:todos) { described_class.new }
 
-  describe '#create' do
-    let(:account) { build(:account) }
+  let(:account) { build(:account) }
+  let(:todo_item) { build(:todo_item) }
 
+  before do
+    allow(todos).to receive(:log_exception)
+  end
+
+  describe '#create' do
     let(:params) do
       ActionController::Parameters.new('todo' => 'Do something.').permit(:todo)
     end
 
-    let(:todo_item) { build(:todo_item) }
-
     before do
       allow(TodoItem).to receive(:create!).and_return(todo_item)
-      allow(todos).to receive(:log_exception)
     end
 
     it 'creates todo item for given account and params' do
@@ -133,6 +135,59 @@ RSpec.describe Todos do
 
       it 'raises Todos::ServiceError' do
         expect { todos.list(account) }.to raise_error(Todos::ServiceError)
+      end
+    end
+  end
+
+  describe '#destroy' do
+    let(:params) { ActionController::Parameters.new('id' => '7').permit(:id) }
+
+    before do
+      allow(TodoItem).to \
+        receive(:find_by!)
+        .with(account: account, id: params[:id])
+        .and_return(todo_item)
+      allow(todo_item).to receive(:destroy!)
+    end
+
+    it 'destroys todo item associated with given account and param ID' do
+      todos.destroy(account, params)
+      expect(todo_item).to have_received(:destroy!)
+    end
+
+    context 'when todo item is not found' do
+      it 'raises Todos::ParamErrors' do
+        exception = ActiveRecord::RecordNotFound.new
+        allow(TodoItem).to receive(:find_by!).and_raise(exception)
+        expect { todos.destroy(account, params) }.to \
+          raise_error do |error|
+            expect(error).to be_a(Todos::ParamErrors)
+            expect(error.errors).to \
+              include(id: I18n.t('errors.messages.invalid'))
+          end
+      end
+    end
+
+    context 'when destroying todo item fails for unknown reason' do
+      let(:exception) { StandardError.new }
+
+      before do
+        allow(todo_item).to receive(:destroy!).and_raise(exception)
+      end
+
+      it 'logs exception' do
+        begin
+          todos.destroy(account, params)
+        rescue Todos::ServiceError
+          # noop
+        end
+
+        expect(todos).to have_received(:log_exception).with(exception)
+      end
+
+      it 'raises Todos::ServiceError' do
+        expect { todos.destroy(account, params) }.to \
+          raise_error(Todos::ServiceError)
       end
     end
   end
