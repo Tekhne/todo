@@ -128,4 +128,76 @@ RSpec.describe Api::TodosController, type: :controller do
       end
     end
   end
+
+  describe '#destroy' do
+    let(:destroy_params) do
+      ActionController::Parameters.new(params).permit(:id)
+    end
+
+    let(:params) { { 'id' => '7' } }
+
+    before do
+      allow(todos).to receive(:destroy)
+    end
+
+    it do
+      expect(controller).to \
+        route(:delete, '/api/todos/7').to(action: :destroy, id: 7)
+    end
+
+    it 'destroys todo' do
+      delete :destroy, as: :json, params: params
+      expect(todos).to \
+        have_received(:destroy).with(account, destroy_params)
+    end
+
+    it 'assigns @message' do
+      delete :destroy, as: :json, params: params
+      expect(assigns(:message)).to \
+        eq(I18n.t('application_controller.common.success'))
+    end
+
+    context 'when destroying todo fails due to param errors' do
+      let(:exception) do
+        Todos::ParamErrors.new(
+          errors: { id: I18n.t('errors.messages.invalid') }
+        )
+      end
+
+      before { allow(todos).to receive(:destroy).and_raise(exception) }
+
+      it 'assigns @message' do
+        delete :destroy, as: :json, params: params
+        expect(assigns(:message)).to \
+          eq(I18n.t('application_controller.common.param_errors'))
+      end
+
+      it 'assigns @param_errors' do
+        delete :destroy, as: :json, params: params
+        expect(assigns(:param_errors)).to eq(exception.errors)
+      end
+
+      it 'renders status :unprocessable_entity' do
+        delete :destroy, as: :json, params: params
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context 'when destroying todo fails due to a service error' do
+      let(:exception) { Todos::ServiceError.new }
+
+      before { allow(todos).to receive(:destroy).and_raise(exception) }
+
+      it 'assigns @message' do
+        delete :destroy, as: :json, params: params
+        expect(assigns(:message)).to \
+          eq(I18n.t('application_controller.common.service_error'))
+      end
+
+      it 'renders status :internal_server_error' do
+        delete :destroy, as: :json, params: params
+        expect(response).to have_http_status(:internal_server_error)
+      end
+    end
+  end
 end
