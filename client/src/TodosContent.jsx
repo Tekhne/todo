@@ -3,7 +3,9 @@ import NewTodoForm from './NewTodoForm';
 import React, { useContext } from 'react';
 import TodoItems from './TodoItems';
 import Viewport from './Viewport';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TodosContext } from './todos-context';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export function TodosContent() {
   const { todosState, todosDispatch } = useContext(TodosContext);
@@ -23,7 +25,7 @@ export function TodosContent() {
                   onClick={handleNewTodoClick}
                   title="New Todo"
                 >
-                  +
+                  <FontAwesomeIcon icon={faPlus} />
                 </span>
               </span>
             )}

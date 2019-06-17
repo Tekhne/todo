@@ -1,7 +1,13 @@
 import Modal from './Modal';
 import Notice from './Notice';
 import React, { useContext } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TodosContext } from './todos-context';
+import {
+  faEllipsisH,
+  faPlus,
+  faTimes
+} from '@fortawesome/free-solid-svg-icons';
 import { get } from 'lodash';
 import { isEmpty } from 'lodash';
 import { useAppContext } from './use-app-context';
@@ -89,14 +95,16 @@ export function NewTodoForm() {
             </span>
             <span className="icons">
               {formState.submitting ? (
-                <span className="icon">...</span>
+                <span className="icon">
+                  <FontAwesomeIcon icon={faEllipsisH} />
+                </span>
               ) : (
                 <span
                   className="icon icon-add"
                   onClick={handleSubmit}
                   title="Add Todo"
                 >
-                  +
+                  <FontAwesomeIcon icon={faPlus} />
                 </span>
               )}
               <span
@@ -104,7 +112,7 @@ export function NewTodoForm() {
                 onClick={handleDelete}
                 title="Delete Todo"
               >
-                &times;
+                <FontAwesomeIcon icon={faTimes} />
               </span>
             </span>
           </div>

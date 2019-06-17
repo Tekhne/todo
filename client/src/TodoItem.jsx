@@ -2,7 +2,9 @@ import Modal from './Modal';
 import Notice from './Notice';
 import React, { useContext, useState } from 'react';
 import { AppContext } from './app-context';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TodosContext } from './todos-context';
+import { faEllipsisH, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { get } from 'lodash';
 import { useModal } from './use-modal';
 
@@ -39,14 +41,12 @@ export function TodoItem({ value }) {
         <span className="description">{value.description}</span>
         <span className="actions" title="Delete Todo">
           {deleting ? (
-            <span className="action">
-              <span className="action-icon">...</span>
+            <span className="action-icon">
+              <FontAwesomeIcon icon={faEllipsisH} />
             </span>
           ) : (
-            <span className="action action-delete">
-              <span className="action-icon" onClick={handleDelete}>
-                &times;
-              </span>
+            <span className="action-delete action-icon" onClick={handleDelete}>
+              <FontAwesomeIcon icon={faTimes} />
             </span>
           )}
         </span>

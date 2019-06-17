@@ -4,7 +4,6 @@
   grid-template-columns: 1fr min-content;
 
   .description {
-    align-self: center;
     padding: 0.5rem 0;
 
     &:hover {
@@ -14,16 +13,20 @@
   }
 
   .actions {
-    align-self: center;
-    justify-self: end;
     margin-left: 0.2rem;
+    height: 100%;
   }
 
-  .action {
+  .action-icon {
+    align-items: center;
     border-radius: $border-radius;
     cursor: pointer;
-    font-size: 1.5rem;
+    display: grid;
     font-weight: bold;
+    grid-template-columns: 1fr;
+    height: 100%;
+    justify-items: center;
+    width: 2rem;
   }
 
   .action-delete {
@@ -34,10 +37,8 @@
       background-color: $color-red-focus;
     }
   }
+}
 
-  .action-icon {
-    display: inline-block;
-    text-align: center;
-    width: 2rem;
-  }
+.todo-item + .todo-item {
+  margin-top: 0.5rem;
 }

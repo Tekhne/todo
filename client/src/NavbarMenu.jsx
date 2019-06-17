@@ -1,7 +1,9 @@
 import Modal from './Modal';
 import Notice from './Notice';
 import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import { faBars, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { get } from 'lodash';
 import { useAppContext } from './use-app-context';
 import { useModal } from './use-modal';
@@ -33,7 +35,9 @@ export function NavbarMenu({ history }) {
   if (!authnState.isLoggedIn) {
     return (
       <span className="navbar-menu">
-        <Link to="/login">Log in &rarr;</Link>
+        <Link to="/login">
+          <FontAwesomeIcon icon={faSignInAlt} /> Log in
+        </Link>
       </span>
     );
   }
@@ -66,8 +70,7 @@ export function NavbarMenu({ history }) {
     <>
       <span className="navbar-menu">
         <span className="navbar-menu-title" onClick={handleMenuClick}>
-          <span className="navbar-menu-icon">&#9776;</span>
-          Menu
+          <FontAwesomeIcon icon={faBars} /> Menu
         </span>
         {showMenu && (
           <div className="navbar-menu-dropdown">

@@ -3,7 +3,9 @@ import Modal from './Modal';
 import Notice from './Notice';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { get } from 'lodash';
 import { useAppContext } from './use-app-context';
 import { useForm } from './use-form';
@@ -161,7 +163,10 @@ export function SignupForm({ history, modalAriaHideApp }) {
           </div>
         </form>
         <div className="login-link">
-          Already signed up? <Link to="/login">Log in &rarr;</Link>
+          Already signed up?{' '}
+          <Link to="/login">
+            <FontAwesomeIcon icon={faSignInAlt} /> Log in
+          </Link>
         </div>
       </div>
       <Modal

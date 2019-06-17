@@ -2,7 +2,9 @@ import * as yup from 'yup';
 import Notice from './Notice';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useAppContext } from './use-app-context';
 import { useForm } from './use-form';
 import { withRouter } from 'react-router';
@@ -30,7 +32,10 @@ function buildSubmitCallback({ authnDispatch, history, serverApi }) {
 }
 
 export function LoginForm({ history }) {
-  const { authn: { authnDispatch }, serverApi } = useAppContext();
+  const {
+    authn: { authnDispatch },
+    serverApi
+  } = useAppContext();
 
   const { formState, handleBlur, handleChange, handleSubmit } = useForm({
     fieldNames: ['email', 'username'],
@@ -108,7 +113,10 @@ export function LoginForm({ history }) {
         </div>
       </form>
       <div className="signup-link">
-        Don't have an account? <Link to="/welcome">Sign up &rarr;</Link>
+        Don't have an account?{' '}
+        <Link to="/welcome">
+          <FontAwesomeIcon icon={faUserPlus} /> Sign up
+        </Link>
       </div>
     </div>
   );
