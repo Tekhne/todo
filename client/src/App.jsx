@@ -5,12 +5,12 @@ import Routes from './Routes';
 
 export function App() {
   return (
-    <div className="app">
-      <AppProvider>
+    <AppProvider>
+      <div className="app">
         <Navbar />
         <Routes />
-      </AppProvider>
-    </div>
+      </div>
+    </AppProvider>
   );
 }
 
