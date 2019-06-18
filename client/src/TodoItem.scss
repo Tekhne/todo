@@ -5,11 +5,14 @@
   display: grid;
   grid-template-columns: 1fr min-content;
 
+  &:hover {
+    background-color: lighten($color-grey, 47%);
+  }
+
   .description {
     padding: 0.4rem 0 0.4rem 0.4rem;
 
     &:hover {
-      background-color: lighten($color-grey, 47%);
       border-radius: $border-radius;
     }
   }
