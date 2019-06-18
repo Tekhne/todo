@@ -1,10 +1,12 @@
 .todo-item {
   border-radius: $border-radius;
+  border: 1px dotted $color-border;
+  cursor: grab;
   display: grid;
   grid-template-columns: 1fr min-content;
 
   .description {
-    padding: 0.5rem 0;
+    padding: 0.4rem 0 0.4rem 0.4rem;
 
     &:hover {
       background-color: lighten($color-grey, 47%);
@@ -40,5 +42,5 @@
 }
 
 .todo-item + .todo-item {
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
 }
