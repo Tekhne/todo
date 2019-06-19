@@ -1,6 +1,5 @@
 .todo-item {
   border-radius: $border-radius;
-  border: 1px dotted $color-border;
   cursor: grab;
   display: grid;
   grid-template-columns: 1fr min-content;
@@ -24,7 +23,8 @@
 
   .action-icon {
     align-items: center;
-    border-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    border-top-right-radius: $border-radius;
     cursor: pointer;
     display: grid;
     font-weight: bold;
