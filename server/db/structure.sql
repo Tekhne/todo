@@ -134,7 +134,8 @@ CREATE TABLE public.todo_items (
     account_id bigint NOT NULL,
     description character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    manual_priority integer NOT NULL
 );
 
 
@@ -345,6 +346,13 @@ CREATE INDEX index_todo_items_on_account_id ON public.todo_items USING btree (ac
 
 
 --
+-- Name: index_todo_items_on_account_id_and_manual_priority; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_todo_items_on_account_id_and_manual_priority ON public.todo_items USING btree (account_id, manual_priority);
+
+
+--
 -- Name: index_token_credentials_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -424,6 +432,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190429170737'),
 ('20190429184734'),
 ('20190430193519'),
-('20190607201532');
+('20190607201532'),
+('20190625182033');
 
 
