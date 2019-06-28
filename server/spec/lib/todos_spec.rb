@@ -19,11 +19,31 @@ RSpec.describe Todos do
       allow(TodoItem).to receive(:create!).and_return(todo_item)
     end
 
-    it 'creates todo item for given account and params' do
-      todos.create(account, params)
-      expect(TodoItem).to \
-        have_received(:create!)
-        .with(account: account, description: params[:todo])
+    context 'when no other todo items exist for account' do
+      it 'creates todo item with manual priority of 1' do
+        todos.create(account, params)
+        expect(TodoItem).to \
+          have_received(:create!)
+          .with(
+            account: account,
+            description: params[:todo],
+            manual_priority: 1
+          )
+      end
+    end
+
+    context 'when other todo items exist for account' do
+      it 'creates todo items with manual priority one greater than max' do
+        allow(TodoItem).to receive_message_chain(:where, :maximum).and_return(2)
+        todos.create(account, params)
+        expect(TodoItem).to \
+          have_received(:create!)
+          .with(
+            account: account,
+            description: params[:todo],
+            manual_priority: 3
+          )
+      end
     end
 
     context 'when creating todo item fails' do
