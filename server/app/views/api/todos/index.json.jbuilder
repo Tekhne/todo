@@ -1,2 +1,5 @@
 json.message @message
-json.todos @todo_items if @todo_items
+
+if @todo_items
+  json.todos @todo_items, :description, :id, :manual_priority
+end
