@@ -57,11 +57,7 @@ export function TodoItems() {
     );
   }
 
-  return (
-    <div className="todo-items">
-      <ul className="todo-items-list">{todoItems}</ul>
-    </div>
-  );
+  return <div className="todo-items">{todoItems}</div>;
 }
 
 export default TodoItems;

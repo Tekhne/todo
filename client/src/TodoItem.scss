@@ -3,6 +3,7 @@
   cursor: grab;
   display: grid;
   grid-template-columns: 1fr min-content;
+  margin-top: 0.4rem;
 
   &:hover {
     background-color: lighten($color-grey, 47%);
@@ -42,8 +43,4 @@
       background-color: $color-red-focus;
     }
   }
-}
-
-.todo-item + .todo-item {
-  margin-top: 0.4rem;
 }

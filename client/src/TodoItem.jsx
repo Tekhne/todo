@@ -37,7 +37,7 @@ export function TodoItem({ value }) {
 
   return (
     <>
-      <li className="todo-item">
+      <div className="todo-item">
         <span className="description">{value.description}</span>
         <span className="actions" title="Delete Todo">
           {deleting ? (
@@ -50,7 +50,7 @@ export function TodoItem({ value }) {
             </span>
           )}
         </span>
-      </li>
+      </div>
       <Modal
         handleDismiss={handleModalDismiss}
         isOpen={modalState.showModal}
