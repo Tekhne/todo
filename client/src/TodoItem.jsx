@@ -1,6 +1,6 @@
 import Modal from './Modal';
 import Notice from './Notice';
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { AppContext } from './app-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TodosContext } from './todos-context';
@@ -14,7 +14,7 @@ export function TodoItem({ value }) {
   const [deleting, setDeleting] = useState(false);
   const [modalState, setModalState] = useModal();
 
-  const handleDelete = async () => {
+  const handleDelete = useCallback(async () => {
     setDeleting(true);
 
     try {
@@ -30,10 +30,13 @@ export function TodoItem({ value }) {
       setDeleting(false);
       setModalState({ ...modalState, modalContent, showModal: true });
     }
-  };
+  }, [modalState, serverApi, setDeleting, setModalState, todosDispatch, value]);
 
-  const handleModalDismiss = () =>
-    setModalState({ ...modalState, modalContent: null, showModal: false });
+  const handleModalDismiss = useCallback(
+    () =>
+      setModalState({ ...modalState, modalContent: null, showModal: false }),
+    [modalState, setModalState]
+  );
 
   return (
     <>
