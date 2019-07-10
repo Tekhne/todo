@@ -46,7 +46,7 @@ export function TodoItems() {
   }
 
   const todoItems = todosState.todos.map(todo => (
-    <TodoItem key={todo.id} value={todo} />
+    <TodoItem key={todo.id} todo={todo} />
   ));
 
   if (isEmpty(todoItems)) {

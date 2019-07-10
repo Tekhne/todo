@@ -8,7 +8,7 @@ import { faEllipsisH, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { get } from 'lodash';
 import { useModal } from './use-modal';
 
-export function TodoItem({ value }) {
+export function TodoItem({ todo }) {
   const { serverApi } = useContext(AppContext);
   const { todosDispatch } = useContext(TodosContext);
   const [deleting, setDeleting] = useState(false);
@@ -18,8 +18,8 @@ export function TodoItem({ value }) {
     setDeleting(true);
 
     try {
-      await serverApi.delete({ route: 'todos', routeData: { id: value.id } });
-      todosDispatch({ type: 'todo:delete', id: value.id });
+      await serverApi.delete({ route: 'todos', routeData: { id: todo.id } });
+      todosDispatch({ type: 'todo:delete', id: todo.id });
     } catch (error) {
       const modalContent = (
         <Notice dismissable={false} type="alert">
@@ -30,7 +30,7 @@ export function TodoItem({ value }) {
       setDeleting(false);
       setModalState({ ...modalState, modalContent, showModal: true });
     }
-  }, [modalState, serverApi, setDeleting, setModalState, todosDispatch, value]);
+  }, [modalState, serverApi, setDeleting, setModalState, todosDispatch, todo]);
 
   const handleModalDismiss = useCallback(
     () =>
@@ -41,7 +41,7 @@ export function TodoItem({ value }) {
   return (
     <>
       <div className="todo-item">
-        <span className="description">{value.description}</span>
+        <span className="description">{todo.description}</span>
         <span className="actions" title="Delete Todo">
           {deleting ? (
             <span className="action-icon">
