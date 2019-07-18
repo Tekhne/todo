@@ -3,13 +3,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import TodoItem from './TodoItem';
 import { AppContext } from './app-context';
 import { TodosContext } from './todos-context';
-import { get, isEmpty } from 'lodash';
+import { get, isEmpty, sortBy } from 'lodash';
+
+const initialDragState = {
+  todo: null
+};
 
 export function TodoItems() {
+  const [dragState, setDragState] = useState(initialDragState);
+  const [loading, setLoading] = useState(true);
+  const [loadingError, setLoadingError] = useState(null);
   const { serverApi } = useContext(AppContext);
   const { todosState, todosDispatch } = useContext(TodosContext);
-  const [loadingError, setLoadingError] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getTodos() {
@@ -45,8 +50,13 @@ export function TodoItems() {
     );
   }
 
-  const todoItems = todosState.todos.map(todo => (
-    <TodoItem key={todo.id} todo={todo} />
+  const todoItems = sortBy(todosState.todos, 'manual_priority').map(todo => (
+    <TodoItem
+      dragState={dragState}
+      key={todo.id}
+      setDragState={setDragState}
+      todo={todo}
+    />
   ));
 
   if (isEmpty(todoItems)) {
