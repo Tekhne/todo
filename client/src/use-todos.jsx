@@ -1,4 +1,4 @@
-import { sortBy, uniqBy } from 'lodash';
+import { uniqBy } from 'lodash';
 import { useReducer } from 'react';
 
 const initialTodosState = {
