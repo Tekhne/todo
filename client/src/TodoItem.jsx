@@ -8,6 +8,10 @@ import { faEllipsisH, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { get, isNil } from 'lodash';
 import { useModal } from './use-modal';
 
+function isDraggable(dragState, todo) {
+  return isNil(dragState.todo) || todo.id === dragState.todo.id;
+}
+
 export function TodoItem({ dragState, setDragState, todo }) {
   const [deleting, setDeleting] = useState(false);
   const [modalState, setModalState] = useModal();
@@ -85,7 +89,7 @@ export function TodoItem({ dragState, setDragState, todo }) {
 
   let dragProps;
 
-  if (isNil(dragState.todo) || todo.id === dragState.todo.id) {
+  if (isDraggable(dragState, todo)) {
     dragProps = {
       draggable: true,
       onDragEnd: handleDragEnd,
