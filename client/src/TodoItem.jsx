@@ -37,15 +37,6 @@ export function TodoItem({ dragState, setDragState, todo }) {
     setModalState({ ...modalState, modalContent: null, showModal: false });
   }, [modalState, setModalState]);
 
-  /*
-   * FIXME
-   * // A dragged item (element or text selection) is dragged.
-   * const handleDrag = useCallback(event => {
-   * }, []);
-   */
-
-  // A drag operation ends (such as releasing a mouse button or hitting the Esc
-  // key; see Finishing a Drag.)
   const handleDragEnd = useCallback(
     event => {
       event.currentTarget.classList.remove('dragging');
@@ -55,25 +46,6 @@ export function TodoItem({ dragState, setDragState, todo }) {
     [dragState, setDragState, todosDispatch]
   );
 
-  /*
-   * FIXME
-   * // A dragged item enters a valid drop target. (See Specifying Drop Targets.)
-   * const handleDragEnter = useCallback(
-   *   event => {
-   *     setDragState({ ...dragState, isHovering: true });
-   *   },
-   *   [dragState, setDragState]
-   * );
-   */
-
-  /*
-   * FIXME
-   * // An element is no longer the drag operation's immediate selection target.
-   * const handleDragExit = useCallback(event => {
-   * }, []);
-   */
-
-  // A dragged item leaves a valid drop target.
   const handleDragLeave = useCallback(
     event => {
       todosDispatch({ type: 'todo:dragLeave' });
@@ -81,7 +53,6 @@ export function TodoItem({ dragState, setDragState, todo }) {
     [todosDispatch]
   );
 
-  // A dragged item is being dragged over a valid drop target, every few hundred milliseconds.
   const handleDragOver = useCallback(
     event => {
       event.preventDefault();
@@ -98,7 +69,6 @@ export function TodoItem({ dragState, setDragState, todo }) {
     [dragState, todo, todosDispatch]
   );
 
-  // The user starts dragging an item. (See Starting a Drag Operation.)
   const handleDragStart = useCallback(
     event => {
       event.currentTarget.classList.add('dragging');
@@ -109,45 +79,22 @@ export function TodoItem({ dragState, setDragState, todo }) {
     [dragState, setDragState, todo]
   );
 
-  // An item is dropped on a valid drop target. (See Performing a Drop.)
   const handleDrop = useCallback(event => {
     event.preventDefault();
   }, []);
 
   let dragProps;
 
-  /*
-   * drop zone receives these events:
-   *   handleDragEnter
-   *   handleDragOver
-   *   handleDragExit
-   *   handleDragLeave
-   *   handleDrop
-   */
-
-  // FIXME
   if (isNil(dragState.todo) || todo.id === dragState.todo.id) {
     dragProps = {
       draggable: true,
-      // onDrag: handleDrag,
       onDragEnd: handleDragEnd,
-      // onDragEnter: handleDragEnter,
-      // onDragExit: handleDragExit,
       onDragLeave: handleDragLeave,
-      // onDragOver: handleDragOver,
       onDragStart: handleDragStart
-      // onDrop: handleDrop
     };
   } else {
     dragProps = {
-      // draggable: true,
-      // onDrag: handleDrag,
-      // onDragEnd: handleDragEnd,
-      // onDragEnter: handleDragEnter,
-      // onDragExit: handleDragExit,
-      // onDragLeave: handleDragLeave,
       onDragOver: handleDragOver,
-      // onDragStart: handleDragStart,
       onDrop: handleDrop
     };
   }
