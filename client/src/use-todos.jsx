@@ -7,6 +7,33 @@ const initialTodosState = {
   todos: []
 };
 
+function isDraggingDown({ drag, hover }) {
+  return drag.manual_priority < hover.manual_priority;
+}
+
+function isMouseInBoundingRect(action) {
+  return (
+    action.dragMouseCoordinates.X <= action.hoverBoundingRect.right &&
+    action.dragMouseCoordinates.X >= action.hoverBoundingRect.left &&
+    action.dragMouseCoordinates.Y <= action.hoverBoundingRect.bottom &&
+    action.dragMouseCoordinates.Y >= action.hoverBoundingRect.top
+  );
+}
+
+function shouldMoveTodoUp({ drag, hover, todo }) {
+  return (
+    todo.manual_priority <= hover.manual_priority &&
+    todo.manual_priority > drag.manual_priority
+  );
+}
+
+function shouldMoveTodoDown({ drag, hover, todo }) {
+  return (
+    todo.manual_priority >= hover.manual_priority &&
+    todo.manual_priority < drag.manual_priority
+  );
+}
+
 function uniqTodos(todos) {
   return uniqBy(todos, t => t.id);
 }
@@ -31,12 +58,7 @@ function todosReducer(state, action) {
       if (action.dragId === action.hoverId) return state;
 
       if (!state.reorderable) {
-        if (
-          action.dragMouseCoordinates.X <= action.hoverBoundingRect.right &&
-          action.dragMouseCoordinates.X >= action.hoverBoundingRect.left &&
-          action.dragMouseCoordinates.Y <= action.hoverBoundingRect.bottom &&
-          action.dragMouseCoordinates.Y >= action.hoverBoundingRect.top
-        ) {
+        if (isMouseInBoundingRect(action)) {
           return state;
         } else {
           return { ...state, reorderable: true };
@@ -46,26 +68,17 @@ function todosReducer(state, action) {
       const drag = state.todos.find(t => t.id === action.dragId);
       const hover = state.todos.find(t => t.id === action.hoverId);
 
-      let dragDirection =
-        drag.manual_priority < hover.manual_priority ? 'down' : 'up';
-
       const todos = state.todos.map(todo => {
         if (todo.id === drag.id) {
           return { ...todo, manual_priority: hover.manual_priority };
         }
 
-        if (dragDirection === 'down') {
-          if (
-            todo.manual_priority <= hover.manual_priority &&
-            todo.manual_priority > drag.manual_priority
-          ) {
+        if (isDraggingDown({ drag, hover })) {
+          if (shouldMoveTodoUp({ drag, hover, todo })) {
             return { ...todo, manual_priority: todo.manual_priority - 1 };
           }
         } else {
-          if (
-            todo.manual_priority >= hover.manual_priority &&
-            todo.manual_priority < drag.manual_priority
-          ) {
+          if (shouldMoveTodoDown({ drag, hover, todo })) {
             return { ...todo, manual_priority: todo.manual_priority + 1 };
           }
         }
