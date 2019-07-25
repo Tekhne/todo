@@ -1,12 +1,16 @@
 .todo-item {
   border-radius: $border-radius;
-  cursor: grab;
+  cursor: pointer;
   display: grid;
   grid-template-columns: 1fr min-content;
   margin-top: 0.4rem;
 
   &:hover {
     background-color: lighten($color-grey, 47%);
+  }
+
+  &.dragging {
+    cursor: grab;
   }
 
   .description {

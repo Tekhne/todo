@@ -48,6 +48,7 @@ export function TodoItem({ dragState, setDragState, todo }) {
   // key; see Finishing a Drag.)
   const handleDragEnd = useCallback(
     event => {
+      event.currentTarget.classList.remove('dragging');
       setDragState({ ...dragState, todo: null });
       todosDispatch({ type: 'todo:dragEnd' });
     },
@@ -100,6 +101,7 @@ export function TodoItem({ dragState, setDragState, todo }) {
   // The user starts dragging an item. (See Starting a Drag Operation.)
   const handleDragStart = useCallback(
     event => {
+      event.currentTarget.classList.add('dragging');
       event.dataTransfer.dropEffect = 'move';
       event.dataTransfer.setData('text/plain', todo.id);
       setDragState({ ...dragState, todo });
