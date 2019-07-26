@@ -1,6 +1,6 @@
 import Modal from './Modal';
 import Notice from './Notice';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TodosContext } from './todos-context';
 import {
@@ -53,9 +53,15 @@ function buildSubmitCallback({
 }
 
 export function NewTodoForm() {
+  const [modalState, setModalState] = useModal();
+  const todoInputRef = useRef(null);
   const { serverApi } = useAppContext();
   const { todosDispatch } = useContext(TodosContext);
-  const [modalState, setModalState] = useModal();
+
+  useEffect(() => {
+    if (!todoInputRef.current) return;
+    todoInputRef.current.focus();
+  });
 
   const { formState, handleChange, handleSubmit } = useForm({
     fieldNames: ['todo'],
@@ -89,6 +95,7 @@ export function NewTodoForm() {
                 name="todo"
                 onBlur={handleBlur}
                 onChange={handleChange}
+                ref={todoInputRef}
                 type="text"
                 value={formState.values.todo}
               />
