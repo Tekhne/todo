@@ -6,7 +6,8 @@ export const routes = {
   login: () => '/api/login',
   signup: () => '/api/signup',
   signupConfirmation: () => '/api/signup_confirmation',
-  todos: r => (get(r, 'id') ? `/api/todos/${r.id}` : '/api/todos')
+  todos: r => (get(r, 'id') ? `/api/todos/${r.id}` : '/api/todos'),
+  todosReorders: () => '/api/todos_reorders'
 };
 
 const STATUS_TO_ERROR = new Map([

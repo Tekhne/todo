@@ -3,6 +3,7 @@ import { useReducer } from 'react';
 
 const initialTodosState = {
   backup: null,
+  isSavingReorder: false,
   reorderable: true,
   showNewTodoForm: false,
   todos: []
@@ -55,11 +56,11 @@ function todosReducer(state, action) {
         : { ...state, backup: cloneDeep(state.todos) };
     case 'todo:delete':
       return { ...state, todos: state.todos.filter(t => t.id !== action.id) };
-    case 'todo:dragEnd':
+    case 'todo:drag:end':
       return { ...state, reorderable: true };
-    case 'todo:dragLeave':
+    case 'todo:drag:leave':
       return { ...state, reorderable: true };
-    case 'todo:dragOver':
+    case 'todo:drag:over':
       if (action.dragId === action.hoverId) return state;
 
       if (!state.reorderable) {
@@ -92,6 +93,14 @@ function todosReducer(state, action) {
       });
 
       return { ...state, reorderable: false, todos };
+    case 'todo:recover':
+      return state.backup
+        ? { ...state, backup: null, todos: state.backup }
+        : state;
+    case 'todo:saveReorder:start':
+      return { ...state, isSavingReorder: true };
+    case 'todo:saveReorder:end':
+      return { ...state, isSavingReorder: false };
     default:
       throw new Error(`unknown reducer action type: ${action.type}`);
   }

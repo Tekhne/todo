@@ -15,8 +15,13 @@ const propTypes = {
   todo: PropTypes.object.isRequired
 };
 
-function isDraggable(dragState, todo) {
+function isDraggable({ dragState, todo, todosState }) {
+  if (todosState.isSavingReorder) return false;
   return isNil(dragState.todo) || todo.id === dragState.todo.id;
+}
+
+function buildTodosReorderData(todos) {
+  return todos.map(t => ({ id: t.id, manual_priority: t.manual_priority }));
 }
 
 export function TodoItem({ dragState, setDragState, todo }) {
@@ -24,7 +29,7 @@ export function TodoItem({ dragState, setDragState, todo }) {
   const [modalState, setModalState] = useModal();
   const ref = useRef(null);
   const { serverApi } = useContext(AppContext);
-  const { todosDispatch } = useContext(TodosContext);
+  const { todosState, todosDispatch } = useContext(TodosContext);
 
   const handleDelete = useCallback(async () => {
     setDeleting(true);
@@ -49,17 +54,43 @@ export function TodoItem({ dragState, setDragState, todo }) {
   }, [modalState, setModalState]);
 
   const handleDragEnd = useCallback(
-    event => {
+    async event => {
       event.currentTarget.classList.remove('dragging');
       setDragState({ ...dragState, todo: null });
-      todosDispatch({ type: 'todo:dragEnd' });
+      todosDispatch({ type: 'todo:drag:end' });
+      todosDispatch({ type: 'todo:saveReorder:start' });
+
+      try {
+        await serverApi.post({
+          data: buildTodosReorderData(todosState.todos),
+          route: 'todosReorders'
+        });
+      } catch (error) {
+        const modalContent = (
+          <Notice dismissable={false} type="alert">
+            {get(error, 'data.message') || 'An unrecognized error occurred.'}
+          </Notice>
+        );
+
+        setModalState({ ...modalState, modalContent, showModal: true });
+        todosDispatch({ type: 'todo:recover' });
+        todosDispatch({ type: 'todo:saveReorder:end' });
+      }
     },
-    [dragState, setDragState, todosDispatch]
+    [
+      dragState,
+      modalState,
+      serverApi,
+      setDragState,
+      setModalState,
+      todosDispatch,
+      todosState.todos
+    ]
   );
 
   const handleDragLeave = useCallback(
     event => {
-      todosDispatch({ type: 'todo:dragLeave' });
+      todosDispatch({ type: 'todo:drag:leave' });
     },
     [todosDispatch]
   );
@@ -70,7 +101,7 @@ export function TodoItem({ dragState, setDragState, todo }) {
       event.dataTransfer.dropEffect = 'move';
 
       todosDispatch({
-        type: 'todo:dragOver',
+        type: 'todo:drag:over',
         dragId: dragState.todo.id,
         dragMouseCoordinates: { X: event.clientX, Y: event.clientY },
         hoverBoundingRect: ref.current.getBoundingClientRect(),
@@ -97,12 +128,13 @@ export function TodoItem({ dragState, setDragState, todo }) {
 
   let dragProps;
 
-  if (isDraggable(dragState, todo)) {
+  if (isDraggable({ dragState, todo, todosState })) {
     dragProps = {
       draggable: true,
       onDragEnd: handleDragEnd,
       onDragLeave: handleDragLeave,
-      onDragStart: handleDragStart
+      onDragStart: handleDragStart,
+      onDrop: handleDrop
     };
   } else {
     dragProps = {
@@ -116,7 +148,7 @@ export function TodoItem({ dragState, setDragState, todo }) {
       <div className="todo-item" ref={ref} {...dragProps}>
         <span className="description">{todo.description}</span>
         <span className="actions" title="Delete Todo">
-          {deleting ? (
+          {todosState.isSavingReorder || deleting ? (
             <span className="action-icon">
               <FontAwesomeIcon icon={faEllipsisH} />
             </span>
