@@ -10,9 +10,7 @@ import { useForm } from './use-form';
 import { withRouter } from 'react-router';
 
 const propTypes = {
-  authnDispatch: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  serverApi: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired
 };
 
 const validationSchema = yup.object().shape({
