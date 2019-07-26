@@ -1,7 +1,6 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactModal from 'react-modal';
-
-import PropTypes from 'prop-types';
 
 // Also see propTypes for ReactModal.
 const propTypes = {

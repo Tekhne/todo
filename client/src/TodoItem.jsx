@@ -1,5 +1,6 @@
 import Modal from './Modal';
 import Notice from './Notice';
+import PropTypes from 'prop-types';
 import React, { useCallback, useContext, useRef, useState } from 'react';
 import { AppContext } from './app-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,6 +8,12 @@ import { TodosContext } from './todos-context';
 import { faEllipsisH, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { get, isNil } from 'lodash';
 import { useModal } from './use-modal';
+
+const propTypes = {
+  dragState: PropTypes.object.isRequired,
+  setDragState: PropTypes.func.isRequired,
+  todo: PropTypes.object.isRequired
+};
 
 function isDraggable(dragState, todo) {
   return isNil(dragState.todo) || todo.id === dragState.todo.id;
@@ -129,5 +136,7 @@ export function TodoItem({ dragState, setDragState, todo }) {
     </>
   );
 }
+
+TodoItem.propTypes = propTypes;
 
 export default TodoItem;

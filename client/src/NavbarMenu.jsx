@@ -1,5 +1,6 @@
 import Modal from './Modal';
 import Notice from './Notice';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,10 @@ import { get } from 'lodash';
 import { useAppContext } from './use-app-context';
 import { useModal } from './use-modal';
 import { withRouter } from 'react-router';
+
+const propTypes = {
+  history: PropTypes.object.isRequired
+};
 
 export function NavbarMenu({ history }) {
   const { authn, serverApi } = useAppContext();
@@ -90,5 +95,7 @@ export function NavbarMenu({ history }) {
     </>
   );
 }
+
+NavbarMenu.propTypes = propTypes;
 
 export default withRouter(NavbarMenu);
