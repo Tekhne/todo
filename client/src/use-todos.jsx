@@ -1,7 +1,8 @@
-import { uniqBy } from 'lodash';
+import { cloneDeep, uniqBy } from 'lodash';
 import { useReducer } from 'react';
 
 const initialTodosState = {
+  backup: null,
   reorderable: true,
   showNewTodoForm: false,
   todos: []
@@ -48,6 +49,10 @@ function todosReducer(state, action) {
       return { ...state, todos: uniqTodos([...state.todos, action.todo]) };
     case 'todo:addMany':
       return { ...state, todos: uniqTodos([...state.todos, ...action.todos]) };
+    case 'todo:backup':
+      return state.backup
+        ? state
+        : { ...state, backup: cloneDeep(state.todos) };
     case 'todo:delete':
       return { ...state, todos: state.todos.filter(t => t.id !== action.id) };
     case 'todo:dragEnd':

@@ -82,12 +82,13 @@ export function TodoItem({ dragState, setDragState, todo }) {
 
   const handleDragStart = useCallback(
     event => {
-      event.currentTarget.classList.add('dragging');
       event.dataTransfer.dropEffect = 'move';
       event.dataTransfer.setData('text/plain', todo.id);
+      event.currentTarget.classList.add('dragging');
       setDragState({ ...dragState, todo });
+      todosDispatch({ type: 'todo:backup' });
     },
-    [dragState, setDragState, todo]
+    [dragState, setDragState, todo, todosDispatch]
   );
 
   const handleDrop = useCallback(event => {
