@@ -88,10 +88,14 @@ export function NewTodoForm() {
     <>
       <div className="new-todo-form">
         <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="todo">New todo</label>
+          </div>
           <div className="form-field">
             <span>
               <input
                 className={formState.fieldErrors.todo && 'field-has-error'}
+                id="todo"
                 name="todo"
                 onBlur={handleBlur}
                 onChange={handleChange}
