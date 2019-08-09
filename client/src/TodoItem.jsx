@@ -62,7 +62,7 @@ export function TodoItem({ dragState, setDragState, todo }) {
 
       try {
         await serverApi.post({
-          data: buildTodosReorderData(todosState.todos),
+          data: { todos: buildTodosReorderData(todosState.todos) },
           route: 'todosReorders'
         });
       } catch (error) {
