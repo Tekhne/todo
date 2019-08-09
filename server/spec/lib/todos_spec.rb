@@ -211,4 +211,98 @@ RSpec.describe Todos do
       end
     end
   end
+
+  describe '#reorder' do
+    let(:params) do
+      ActionController::Parameters
+        .new(
+          'todos' => [
+            { 'id' => '776', 'manual_priority' => '2' },
+            { 'id' => '777', 'manual_priority' => '1' }
+          ]
+        )
+        .permit(todos: %i[id manual_priority])
+    end
+
+    let(:todo_item_776) { create(:todo_item, account: account, id: 776) }
+    let(:todo_item_777) { create(:todo_item, account: account, id: 777) }
+    let(:todo_item_arel) { [todo_item_776, todo_item_777] }
+
+    before do
+      allow(TodoItem).to receive(:where).and_return(todo_item_arel)
+      allow(todo_item_776).to receive(:update!)
+      allow(todo_item_777).to receive(:update!)
+    end
+
+    describe 'when todos in params is missing' do
+      let(:params) do
+        ActionController::Parameters
+          .new({})
+          .permit(todos: %i[id manual_priority])
+      end
+
+      it 'raises Todos::ParamErrors' do
+        expect { todos.reorder(account, params) }.to \
+          raise_error(Todos::ParamErrors)
+      end
+    end
+
+    describe 'when a todo ID in params is missing' do
+      let(:params) do
+        ActionController::Parameters
+          .new('todos' => [{ 'manual_priority' => 1 }])
+          .permit(todos: %i[id manual_priority])
+      end
+
+      it 'raises Todos::ParamErrors' do
+        expect { todos.reorder(account, params) }.to \
+          raise_error(Todos::ParamErrors)
+      end
+    end
+
+    describe 'when a todo manual_priority in params is missing' do
+      let(:params) do
+        ActionController::Parameters
+          .new('todos' => [{ 'id' => 777 }])
+          .permit(todos: %i[id manual_priority])
+      end
+
+      it 'raises Todos::ParamErrors' do
+        expect { todos.reorder(account, params) }.to \
+          raise_error(Todos::ParamErrors)
+      end
+    end
+
+    it 'updates todo items from params' do
+      todos.reorder(account, params)
+      expect(todo_item_776).to have_received(:update!).with(manual_priority: 2)
+      expect(todo_item_777).to have_received(:update!).with(manual_priority: 1)
+    end
+
+    describe 'when updating todo items fails' do
+      let(:exception) do
+        todo_item_776.errors.add(:manual_priority, :invalid)
+        ActiveRecord::RecordInvalid.new(todo_item_776)
+      end
+
+      before do
+        allow(todo_item_776).to receive(:update!).and_raise(exception)
+      end
+
+      it 'raises Todos::ServiceError' do
+        expect { todos.reorder(account, params) }.to \
+          raise_error(Todos::ServiceError)
+      end
+
+      it 'logs exception' do
+        begin
+          todos.reorder(account, params)
+        rescue Todos::ServiceError
+          # noop
+        end
+
+        expect(todos).to have_received(:log_exception).with(exception)
+      end
+    end
+  end
 end
