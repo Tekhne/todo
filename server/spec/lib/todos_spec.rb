@@ -234,7 +234,7 @@ RSpec.describe Todos do
       allow(todo_item_777).to receive(:update!)
     end
 
-    describe 'when todos in params is missing' do
+    context 'when todos in params is missing' do
       let(:params) do
         ActionController::Parameters
           .new({})
@@ -247,7 +247,7 @@ RSpec.describe Todos do
       end
     end
 
-    describe 'when a todo ID in params is missing' do
+    context 'when a todo ID in params is missing' do
       let(:params) do
         ActionController::Parameters
           .new('todos' => [{ 'manual_priority' => 1 }])
@@ -260,7 +260,7 @@ RSpec.describe Todos do
       end
     end
 
-    describe 'when a todo manual_priority in params is missing' do
+    context 'when a todo manual_priority in params is missing' do
       let(:params) do
         ActionController::Parameters
           .new('todos' => [{ 'id' => 777 }])
@@ -279,7 +279,7 @@ RSpec.describe Todos do
       expect(todo_item_777).to have_received(:update!).with(manual_priority: 1)
     end
 
-    describe 'when updating todo items fails' do
+    context 'when updating todo items fails' do
       let(:exception) do
         todo_item_776.errors.add(:manual_priority, :invalid)
         ActiveRecord::RecordInvalid.new(todo_item_776)
