@@ -30,6 +30,7 @@ RSpec.describe CustomExceptions do
   describe described_class::ParamErrors do
     subject(:param_errors) do
       described_class.new(
+        error: error,
         errors: errors,
         message: message,
         original: exception
@@ -46,8 +47,12 @@ RSpec.describe CustomExceptions do
       expect(param_errors.original).to eq(exception)
     end
 
-    it 'sets error form keyword arguments' do
+    it 'sets errors (individual) from keyword arguments' do
       expect(param_errors.errors).to eq(errors)
+    end
+
+    it 'sets error (global) from keyword arguments' do
+      expect(param_errors.error).to eq(error)
     end
   end
 end

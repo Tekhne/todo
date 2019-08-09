@@ -15,9 +15,10 @@ module CustomExceptions
   end
 
   class ParamErrors < CustomError
-    attr_accessor :errors
+    attr_accessor :error, :errors
 
     def initialize(**kwargs)
+      @error = kwargs.delete(:error)
       @errors = kwargs.delete(:errors)
       super(kwargs.delete(:message), **kwargs)
     end
