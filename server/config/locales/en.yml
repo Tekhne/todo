@@ -40,6 +40,9 @@ en:
     todos_controller:
       create:
         success: Todo was created successfully.
+    todos_reorders_controller:
+      create:
+        success: Todos were reordered successfully.
   logins_controller:
     create:
       invalid_credentials: The username or password you provided was invalid.
