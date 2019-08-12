@@ -45,27 +45,43 @@ class Todos
   end
 
   def reorder(account, params)
-    param_todos = params.fetch(:todos).reduce({}) do |memo, o|
-      memo.merge(
-        o.fetch(:id).to_i => {
-          manual_priority: o.fetch(:manual_priority).to_i
-        }
+    begin
+      param_todos = params.fetch(:todos).reduce({}) do |memo, o|
+        memo.merge(
+          o.fetch(:id).to_i => {
+            manual_priority: o.fetch(:manual_priority).to_i
+          }
+        )
+      end
+    rescue ActionController::ParameterMissing
+      raise ParamErrors.new(error: 'The ID or priority for a todo was missing.')
+    end
+
+    manual_priorities = param_todos.values.pluck(:manual_priority).sort
+
+    if manual_priorities != manual_priorities.uniq
+      raise ParamErrors.new(error: 'The todo priorities were not unique.')
+    end
+
+    todo_items = TodoItem.includes(:account).where(account: account)
+
+    if param_todos.length != todo_items.length
+      raise ParamErrors.new(
+        error: 'The number of todos being changed was incorrect.'
       )
     end
 
-    ActiveRecord::Base.transaction do
-      TodoItem
-        .where(account: account, id: param_todos.keys)
-        .each do |todo_item|
+    begin
+      ActiveRecord::Base.transaction do
+        todo_items.each do |todo_item|
           todo_item.update!(
             manual_priority: param_todos[todo_item.id][:manual_priority]
           )
         end
+      end
+    rescue ActiveRecord::ActiveRecordError => e
+      log_exception e
+      raise ServiceError.new
     end
-  rescue ActionController::ParameterMissing
-    raise ParamErrors.new(error: 'The ID or priority for a todo was missing.')
-  rescue StandardError => e
-    log_exception e
-    raise ServiceError.new
   end
 end

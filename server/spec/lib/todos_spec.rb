@@ -224,14 +224,17 @@ RSpec.describe Todos do
         .permit(todos: %i[id manual_priority])
     end
 
-    let(:todo_item_776) { create(:todo_item, account: account, id: 776) }
-    let(:todo_item_777) { create(:todo_item, account: account, id: 777) }
-    let(:todo_item_arel) { [todo_item_776, todo_item_777] }
+    let(:todo_items) do
+      [
+        build(:todo_item, account: account, id: 776),
+        build(:todo_item, account: account, id: 777)
+      ]
+    end
 
     before do
-      allow(TodoItem).to receive(:where).and_return(todo_item_arel)
-      allow(todo_item_776).to receive(:update!)
-      allow(todo_item_777).to receive(:update!)
+      allow(TodoItem).to \
+        receive_message_chain(:includes, :where).and_return(todo_items)
+      todo_items.each { |t| allow(t).to receive(:update!) }
     end
 
     context 'when todos in params is missing' do
@@ -273,20 +276,64 @@ RSpec.describe Todos do
       end
     end
 
+    context 'when a manual_priority is not unique' do
+      let(:params) do
+        ActionController::Parameters
+          .new('todos' => [
+                 { 'id' => 776, 'manual_priority' => 1 },
+                 { 'id' => 777, 'manual_priority' => 1 }
+               ])
+          .permit(todos: %i[id manual_priority])
+      end
+
+      it 'raises Todos::ParamErrors' do
+        expect { todos.reorder(account, params) }.to \
+          raise_error(Todos::ParamErrors)
+      end
+    end
+
+    context 'when length of database todo items != param list' do
+      let(:params) do
+        ActionController::Parameters
+          .new('todos' => [
+                 { 'id' => 776, 'manual_priority' => 2 },
+                 { 'id' => 777, 'manual_priority' => 1 }
+               ])
+          .permit(todos: %i[id manual_priority])
+      end
+
+      let(:todo_items) { [build(:todo_item, account: account, id: 776)] }
+
+      before do
+        allow(TodoItem).to \
+          receive_message_chain(:includes, :where).and_return(todo_items)
+        todo_items.each { |t| allow(t).to receive(:update!) }
+      end
+
+      it 'raises Todos::ParamErrors' do
+        expect { todos.reorder(account, params) }.to \
+          raise_error(Todos::ParamErrors)
+      end
+    end
+
     it 'updates todo items from params' do
       todos.reorder(account, params)
-      expect(todo_item_776).to have_received(:update!).with(manual_priority: 2)
-      expect(todo_item_777).to have_received(:update!).with(manual_priority: 1)
+      expect(todo_items.find { |t| t.id == 776 }).to \
+        have_received(:update!).with(manual_priority: 2)
+      expect(todo_items.find { |t| t.id == 777 }).to \
+        have_received(:update!).with(manual_priority: 1)
     end
 
     context 'when updating todo items fails' do
+      let(:todo_item) { todo_items.find { |t| t.id == 776 } }
+
       let(:exception) do
-        todo_item_776.errors.add(:manual_priority, :invalid)
-        ActiveRecord::RecordInvalid.new(todo_item_776)
+        todo_item.errors.add(:manual_priority, :invalid)
+        ActiveRecord::RecordInvalid.new(todo_item)
       end
 
       before do
-        allow(todo_item_776).to receive(:update!).and_raise(exception)
+        allow(todo_item).to receive(:update!).and_raise(exception)
       end
 
       it 'raises Todos::ServiceError' do
