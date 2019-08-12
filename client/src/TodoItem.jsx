@@ -68,7 +68,7 @@ export function TodoItem({ dragState, setDragState, todo }) {
       } catch (error) {
         const modalContent = (
           <Notice dismissable={false} type="alert">
-            {get(error, 'data.message') || 'An unrecognized error occurred.'}
+            {get(error, 'data.message') || 'An unexpected error occurred.'}
           </Notice>
         );
 
