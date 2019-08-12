@@ -74,8 +74,9 @@ export function TodoItem({ dragState, setDragState, todo }) {
 
         setModalState({ ...modalState, modalContent, showModal: true });
         todosDispatch({ type: 'todo:recover' });
-        todosDispatch({ type: 'todo:saveReorder:end' });
       }
+
+      todosDispatch({ type: 'todo:saveReorder:end' });
     },
     [
       dragState,
