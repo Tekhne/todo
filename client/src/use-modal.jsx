@@ -1,8 +1,10 @@
 import { useState } from 'react';
 
 export function useModal() {
-  return useState({
+  const [modalState, setModalState] = useState({
     modalContent: null,
     showModal: false
   });
+
+  return { modalState, setModalState };
 }

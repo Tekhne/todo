@@ -26,8 +26,8 @@ function buildTodosReorderData(todos) {
 
 export function TodoItem({ dragState, setDragState, todo }) {
   const [deleting, setDeleting] = useState(false);
-  const [modalState, setModalState] = useModal();
   const ref = useRef(null);
+  const { modalState, setModalState } = useModal();
   const { serverApi } = useContext(AppContext);
   const { todosState, todosDispatch } = useContext(TodosContext);
 

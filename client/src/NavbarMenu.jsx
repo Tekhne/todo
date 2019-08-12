@@ -15,10 +15,10 @@ const propTypes = {
 };
 
 export function NavbarMenu({ history }) {
+  const [showMenu, setShowMenu] = useState(false);
   const { authn, serverApi } = useAppContext();
   const { authnState, authnDispatch } = authn;
-  const [showMenu, setShowMenu] = useState(false);
-  const [modalState, setModalState] = useModal();
+  const { modalState, setModalState } = useModal();
 
   useEffect(() => {
     const handleWindowClick = event => {

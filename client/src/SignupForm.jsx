@@ -53,8 +53,8 @@ const validationSchema = yup.object().shape({
 });
 
 export function SignupForm({ history, modalAriaHideApp }) {
+  const { modalState, setModalState } = useModal();
   const { serverApi } = useAppContext();
-  const [modalState, setModalState] = useModal();
 
   const { formState, handleBlur, handleChange, handleSubmit } = useForm({
     fieldNames: ['email', 'password', 'username'],

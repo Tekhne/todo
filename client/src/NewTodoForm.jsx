@@ -53,8 +53,8 @@ function buildSubmitCallback({
 }
 
 export function NewTodoForm() {
-  const [modalState, setModalState] = useModal();
   const todoInputRef = useRef(null);
+  const { modalState, setModalState } = useModal();
   const { serverApi } = useAppContext();
   const { todosDispatch } = useContext(TodosContext);
 
