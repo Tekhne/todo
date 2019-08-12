@@ -24,11 +24,6 @@ RSpec.describe TodoItem, type: :model do
         .of_type(:integer)
         .with_options(null: false)
     end
-
-    it do
-      expect(todo_item).to \
-        have_db_index([:account_id, :manual_priority]).unique
-    end
   end
 
   context 'with associations' do
