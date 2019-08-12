@@ -32,14 +32,5 @@ RSpec.describe TodoItem, type: :model do
 
   context 'with validations' do
     it { is_expected.to validate_presence_of(:description) }
-
-    it do
-      account = create(:account)
-      todo_item = build(:todo_item, account: account)
-
-      expect(todo_item).to \
-        validate_uniqueness_of(:manual_priority)
-        .scoped_to(:account_id)
-    end
   end
 end
