@@ -3,6 +3,10 @@
   .loading-hint {
     color: $color-hint;
   }
+
+  .notice {
+    margin-top: 0.4rem;
+  }
 }
 
 .new-todo-form + .todo-items {
