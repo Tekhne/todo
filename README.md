@@ -3,7 +3,7 @@
 This is a todo list web application built with React and Ruby on Rails. The
 number of features is relatively small, but all features are implemented across
 the full stack (front end, back end, database, configuration, tests (see
-below), etc.) which amounted about 5,200 lines of code.
+below), etc.) which amounted to about 5,200 lines of code.
 
 # Client Tests
 
