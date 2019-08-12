@@ -8,8 +8,8 @@ below), etc.) which amounted to about 5,200 lines of code.
 # Client Tests
 
 The first thing to note is that I used `mocha` instead of `jest` for
-performance reasons (I developed on old hardware). Since I'm using the `expect
-`package , I think it should be straighforward to convert back to `jest` if
+performance reasons (I developed on old hardware). Since I'm using the `expect`
+package, I think it should be straighforward to convert back to `jest` if
 needed.
 
 The second thing to note is that this project uses React hooks, which, at the
